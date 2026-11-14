@@ -30,4 +30,4 @@ Device names: `dcdcusb`, `openups`, `openups2`, `nucups`. Options are parsed in 
 - `src/lib/usbhid.*`: `USBHID`, the libusb HID transport.
 - `src/lib/HIDInterface.*`: abstract base for all devices. It implements the shared parts (message send/recv, `varsToFile`/`fileToVars` for the `KEY=value` cfg format, `executeCommand` parsing of `cmd:param`). Subclasses supply the device specifics: `GetStatus`, `Read/Write/EraseConfigurationMemory`, `parseMessage`, `printValues`, and value conversion.
 - `src/lib/HID{OpenUPS,OpenUPS2,NUCUPS,DCDCUSB}.*`: one subclass per device. Each defines its own `ATXMSG` table (`GetMessages()`), which maps each config variable to an index, length, read mode (1=normal, 2=float, 3=hh:mm:ss), multiplier, limits, unit and description. That table drives status display, cfg export/import and the `-c` comments, so adding or changing a config variable usually means editing only that table.
-- `src/utils/`: small helpers (`HArray`, `HList`, `HLock`, `HThread`, `TxFile`, `util`).
+- `src/utils/`: small helpers (`HArray`, `util`).

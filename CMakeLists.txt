@@ -23,7 +23,6 @@ add_executable(openups ${SOURCES})
 
 target_include_directories(openups PUBLIC src/utils/ src/lib/)
 target_link_libraries(openups
-#pthread
 usb
 )
 

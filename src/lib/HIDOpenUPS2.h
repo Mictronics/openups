@@ -5,8 +5,6 @@
 #include "usbhid.h"
 
 #include "HArray.h"
-#include "HLock.h"
-#include "HList.h"
 
 #define OPENUPS2_MSG_READ  32
 #define OPENUPS2_MSG_WRITE 32

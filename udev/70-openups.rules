@@ -1,0 +1,3 @@
+# Let the logged-in user (uaccess) and group plugdev use Mini-Box UPS/DC-DC devices without sudo.
+# d003 DCDC-USB, d004 OpenUPS, d005 OpenUPS2, d007 NUC-UPS
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="04d8", ATTR{idProduct}=="d00[3457]", TAG+="uaccess", GROUP="plugdev", MODE="0660"

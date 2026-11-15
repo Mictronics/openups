@@ -69,6 +69,13 @@ These devices allow advanced configuration which can be quite complex. It's reco
     $ sudo make install
 
 
+To run without sudo, install the udev rule (re-plug the device afterwards, or run the trigger below):
+
+    $ sudo cp udev/70-openups.rules /etc/udev/rules.d/
+    $ sudo udevadm control --reload && sudo udevadm trigger --subsystem-match=usb --attr-match=idVendor=04d8
+
+The commands below then work without `sudo`.
+
 ## Using
  For all commands below replace *device name* with the name of the device you want to control eg: *openups*, *openups2*, *nucups*
 

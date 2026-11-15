@@ -1,7 +1,7 @@
 #ifndef _HIDOPENUPS2_H_
 #define _HIDOPENUPS2_H_
 
-#include "HIDInterface.h"
+#include "HIDOpenUPSBase.h"
 #include "usbhid.h"
 
 #include "HArray.h"
@@ -138,7 +138,7 @@
 #define OPENUPS2_SCRIPT_END_ADDR				0x3BF0
 
 
-class HIDOpenUPS2 : public HIDInterface
+class HIDOpenUPS2 : public HIDOpenUPSBase
 {
 public:
 	HIDOpenUPS2(USBHID *d);
@@ -163,9 +163,6 @@ public:
 	void incDecVOutVolatile(unsigned char inc);
 
 	void GetStatus();
-	void ReadConfigurationMemory();
-	void EraseConfigurationMemory();
-	void WriteConfigurationMemory();
 
 
 private:

@@ -149,9 +149,9 @@ unsigned int g_OpenUPS2_memTerm[] =
 	};
 
 
-HIDOpenUPS2::HIDOpenUPS2(USBHID *d): HIDInterface(d)
+HIDOpenUPS2::HIDOpenUPS2(USBHID *d): HIDOpenUPSBase(d)
 {
-	m_ulSettingsAddr = OPENUPS2_SETTINGS_ADDR_START;
+	m_bReportWrittenPages = false;
 }
 
 HIDOpenUPS2::~HIDOpenUPS2()
@@ -941,63 +941,4 @@ void HIDOpenUPS2::GetStatus()
 	ret = sendMessage(OPENUPS2_CLOCK_OUT, 0);
 	recvMessage(recv);
 	parseMessage(recv);
-}
-
-void HIDOpenUPS2::ReadConfigurationMemory() 
-{
-	unsigned char recv[32];
-
-	m_ulSettingsAddr = OPENUPS2_SETTINGS_ADDR_START;
-	memset(m_chPackages, 0, SETTINGS_PACKS * 16);
-
-	while (m_ulSettingsAddr < OPENUPS2_SETTINGS_ADDR_END)
-	{
-		sendMessage(OPENUPS2_MEM_READ_OUT, 4, m_ulSettingsAddr & 0xFF, (m_ulSettingsAddr >> 8) & 0xFF, 0x00, 0x10);
-		recvMessage(recv);
-		parseMessage(recv);
-		m_ulSettingsAddr += 16;
-	}
-}
-
-void HIDOpenUPS2::EraseConfigurationMemory() 
-{
-	unsigned char recv[32];
-	int ret;
-
-	m_ulSettingsAddr = OPENUPS2_SETTINGS_ADDR_START;
-	sendMessage(OPENUPS2_MEM_ERASE, 4, m_ulSettingsAddr & 0xFF, (m_ulSettingsAddr >> 8) & 0xFF, 0x00, 0x40);
-
-	int retries = 5;
-	while ((ret = recvMessage(recv) <= 0) && retries > 0) {
-		retries--;
-		usleep(500);
-		fprintf(stderr, "Erase 0x%02x retry %d/5\n", recv[0], retries);
-	}
-
-	if (retries <= 0) {
-		fprintf(stderr, "Error waiting for erase operation to finish\n");
-	} else {
-		fprintf(stderr, "Successfully erased (0x%02x) configuration memory\n", recv[0]);
-	}
-}
-
-void HIDOpenUPS2::WriteConfigurationMemory()
-{
-	unsigned char recv[32];
-	int ret;
-
-	m_ulSettingsAddr = OPENUPS2_SETTINGS_ADDR_START;
-	while (m_ulSettingsAddr < OPENUPS2_SETTINGS_ADDR_END)
-	{
-		sendMessageWithBuffer(OPENUPS2_MEM_WRITE_OUT, 16, m_chPackages+(m_ulSettingsAddr-OPENUPS2_SETTINGS_ADDR_START), 4, m_ulSettingsAddr & 0xFF, (m_ulSettingsAddr >> 8) & 0xFF, 0x00, 0x10);
-		ret = recvMessage(recv);
-		
-		if (ret <= 0 || recv[0] != OPENUPS2_MEM_WRITE_IN) {
-			fprintf(stderr, "Error (%d, 0x%02x) writing configuration variables , aborting ...\n", ret, recv[0]);
-			break;
-		} else {
-			//fprintf(stderr, "Wrote page 0x%lx of configuration\n", m_ulSettingsAddr);
-		}		
-		m_ulSettingsAddr += 16;
-	}
 }

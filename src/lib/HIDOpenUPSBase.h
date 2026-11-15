@@ -22,6 +22,9 @@ public:
 	void ReadConfigurationMemory();
 	void EraseConfigurationMemory();
 	void WriteConfigurationMemory();
+
+protected:
+	bool m_bReportWrittenPages; // OpenUPS2 stays quiet while writing
 };
 
 #endif

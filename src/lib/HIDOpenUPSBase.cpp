@@ -6,6 +6,7 @@
 
 HIDOpenUPSBase::HIDOpenUPSBase(USBHID *d): HIDInterface(d)
 {
+	m_bReportWrittenPages = true;
 	m_ulSettingsAddr = OPENUPS_SETTINGS_ADDR_START;
 }
 
@@ -66,7 +67,7 @@ void HIDOpenUPSBase::WriteConfigurationMemory()
 			fprintf(stderr, "Error (%d, 0x%02x) writing configuration variables , aborting ...\n", ret, recv[0]);
 			break;
 		} else {
-			fprintf(stderr, "Wrote page 0x%lx of configuration\n", m_ulSettingsAddr);
+			if (m_bReportWrittenPages) fprintf(stderr, "Wrote page 0x%lx of configuration\n", m_ulSettingsAddr);
 		}		
 		m_ulSettingsAddr += 16;
 	}

@@ -13,7 +13,7 @@ src/lib/HIDInterface.cpp
 src/utils/util.cpp
 )
 
-option(_DEBUG "Debug messages" ON)
+option(_DEBUG "Debug messages" OFF)
 if (_DEBUG)
   add_definitions(-D_DEBUG)
 endif()
@@ -30,6 +30,8 @@ install(
   TARGETS openups
   DESTINATION bin
   )
+
+install(FILES udev/70-openups.rules DESTINATION lib/udev/rules.d)
 
 # Snap Build
 # snapcraft clean

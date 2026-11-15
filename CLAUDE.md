@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
     cmake . && make          # produces ./openups
     sudo make install
-    cmake -D_DEBUG=OFF .     # _DEBUG (debug messages) defaults to ON
+    cmake -D_DEBUG=ON .      # _DEBUG (debug messages) defaults to OFF
 
 Requires libusb (`usb` is linked). There are no tests or linters. New source files must be added to the `SOURCES` list in `CMakeLists.txt` by hand. Build output (`Makefile`, `CMakeCache.txt`, `*.cfg`, the `openups` binary) is gitignored; any `*.cfg` files in the tree are local, untracked config exports. Snap packaging lives in `snap/snapcraft.yaml`.
 
@@ -22,7 +22,7 @@ Requires libusb (`usb` is linked). There are no tests or linters. New source fil
     sudo ./openups -t openups -i file.cfg      # import config (restarts the UPS)
     sudo ./openups -t dcdcusb -e set_vout:11.5 # device command, `name:param`
 
-Device names: `dcdcusb`, `openups`, `openups2`, `nucups`. Options are parsed in `src/main.cpp` (`getopt "t:i:o:e:cshrbn:"`; `-n` selects among multiple devices).
+Device names: `dcdcusb`, `openups`, `openups2`, `nucups`. Options are parsed in `src/main.cpp` (`getopt_long`, short + long forms; `-n` selects among multiple devices). Exit codes: 0 ok, 1 bad args, 2 open failed, 3 unknown product id.
 
 ## Architecture
 

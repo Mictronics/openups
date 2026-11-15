@@ -16,6 +16,7 @@
 #include "HIDNUCUPS.h"
 #include "HIDInterface.h"
 
+#include <getopt.h>
 #include <stdarg.h>
 #include <math.h>
 #include <strings.h>
@@ -35,47 +36,50 @@ static const struct deviceId* findDeviceByName(const char *name)
 	return NULL;
 }
 
-static int printDeviceCommands(const struct deviceCmd *cmds) 
+static int printDeviceCommands(const struct deviceCmd *cmds, FILE *out) 
 {
 	int i;
 
 	if (!cmds) {
 		return 0;
 	}
-	fprintf(stderr, "\n");
+	fprintf(out, "\n");
 	for (i = 0; cmds[i].cmd != NULL; i++) {
-		fprintf(stderr, "\t%s - %s\n", cmds[i].cmd, cmds[i].desc);
+		fprintf(out, "\t%s - %s\n", cmds[i].cmd, cmds[i].desc);
 	}
 
 	return i;	
 }
 
-int usage(char *progname)
+/* Exit codes: 0 ok, 1 bad arguments/unknown device name, 2 open failed, 3 unknown product id */
+int usage(const char *progname, FILE *out, int rc)
 {
-	fprintf(stderr,
-                "Usage: %s [<options>]\n"
-                "Options:\n"
-                "  -t <device type>:    Select device model (see below)\n"
-                "  -n <device index>:   Select nth connected device of this model (default 0)\n"
-				"  -i <input file>:     Write settings from this file. Warning: Will reboot UPS!\n"
-				"  -o <output file>:    Dump settings to this file\n"
-				"  -c:                  Add comments for each configuration variable to output file\n"
-				"  -s:                  Only output status don't read and show configuration variables\n"
-				"  -e <cmd:param1:...>: Execute command.\n"
-				"  -r			Restart UPS only and exit \n"
-				"  -b			Restart UPS to bootloader and exit \n"
-                "\n",
-                progname);
+	fprintf(out,
+		"Usage: %s [<options>]\n"
+		"Options:\n"
+		"  -t, --type <device type>:  Select device model (see below)\n"
+		"  -n, --index <n>:           Select nth connected device of this model (default 0)\n"
+		"  -i, --import <file>:       Write settings from this file. Warning: Will reboot UPS!\n"
+		"  -o, --export <file>:       Dump settings to this file\n"
+		"  -c, --comments:            Add comments for each configuration variable to output file\n"
+		"  -s, --status:              Only output status, don't read and show configuration variables\n"
+		"  -e, --exec <cmd:param1:...>: Execute command\n"
+		"  -r, --restart:             Restart UPS only and exit\n"
+		"  -b, --bootloader:          Restart UPS to bootloader and exit\n"
+		"  -h, --help:                Show this help\n"
+		"  -V, --version:             Show version\n"
+		"\n",
+		progname);
 
-	fprintf(stderr, "Known device models:\n");
+	fprintf(out, "Known device models:\n");
 	for(int i = 0; deviceIds[i].name != NULL; i++) {
-		fprintf(stderr, "  %s \t- %s (vid: 0x%04x pid: 0x%04x)\n", deviceIds[i].name, deviceIds[i].desc, deviceIds[i].vendorid, deviceIds[i].productid);
-		fprintf(stderr, "    Available Commands: ");
-		if (printDeviceCommands(deviceIds[i].cmds) == 0) {
-			fprintf(stderr, " None\n");
+		fprintf(out, "  %s \t- %s (vid: 0x%04x pid: 0x%04x)\n", deviceIds[i].name, deviceIds[i].desc, deviceIds[i].vendorid, deviceIds[i].productid);
+		fprintf(out, "    Available Commands: ");
+		if (printDeviceCommands(deviceIds[i].cmds, out) == 0) {
+			fprintf(out, " None\n");
 		};
 	}
-        return 3;
+	return rc;
 }
 
 int main(int argc, char **argv)
@@ -93,10 +97,25 @@ int main(int argc, char **argv)
 	char *execCmd = NULL;
 	unsigned long index = 0;
 
-	if (argc < 2)
-		return usage(progname);
+	static const struct option longopts[] = {
+		{"type", required_argument, NULL, 't'},
+		{"index", required_argument, NULL, 'n'},
+		{"import", required_argument, NULL, 'i'},
+		{"export", required_argument, NULL, 'o'},
+		{"exec", required_argument, NULL, 'e'},
+		{"comments", no_argument, NULL, 'c'},
+		{"status", no_argument, NULL, 's'},
+		{"restart", no_argument, NULL, 'r'},
+		{"bootloader", no_argument, NULL, 'b'},
+		{"help", no_argument, NULL, 'h'},
+		{"version", no_argument, NULL, 'V'},
+		{NULL, 0, NULL, 0}
+	};
 
-	while ((c = getopt(argc, argv, "t:i:o:e:cshrbn:")) != -1) {
+	if (argc < 2)
+		return usage(progname, stderr, 1);
+
+	while ((c = getopt_long(argc, argv, "t:i:o:e:cshrbn:V", longopts, NULL)) != -1) {
 		switch (c) {
 			
 			case 't':
@@ -118,8 +137,10 @@ int main(int argc, char **argv)
 				execCmd = optarg;
 				break;
 			case 'h':
-				usage(progname);
-				break;
+				return usage(progname, stdout, 0);
+			case 'V':
+				printf("%s version %s\n", progname, VERSION);
+				return 0;
 			case 'r':
 				doReset = true;
 				break;
@@ -131,22 +152,21 @@ int main(int argc, char **argv)
 				index = strtoul(optarg, NULL, 10);
 				if (errno != 0) {
 					perror("error in value for -n");
-					return usage(progname);
+					return usage(progname, stderr, 1);
 				}
 				if (index > UINT_MAX) {
 					fprintf(stderr, "error in value for -n: too big\n");
-					return usage(progname);
+					return usage(progname, stderr, 1);
 				}
 				break;
 			default:
-				usage(progname);
+				return usage(progname, stderr, 1);
 		}
 	}
 
-	fprintf(stdout, "%s version %s. Device selected: %s\n", progname, VERSION, devicetype);
 	if (!devicetype) {
 		fprintf(stderr, "No device type selected !\n");
-		return usage(progname);
+		return usage(progname, stderr, 1);
 	}
 
 	const struct deviceId *devid = findDeviceByName(devicetype);
@@ -155,7 +175,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Device '%s' unknown\n", devicetype);
 		return 1;
 	} else {
-		fprintf(stderr, "Selected device %s: %s\n", devid->name, devid->desc);
+		fprintf(stderr, "%s version %s. Selected device %s: %s\n", progname, VERSION, devid->name, devid->desc);
 	}
 
 	USBHID *d = new USBHID(devid->vendorid, devid->productid, devid->max_transfer_size, (unsigned int) index);

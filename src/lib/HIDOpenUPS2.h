@@ -124,7 +124,6 @@
 
 #define CHECK_CHAR (unsigned char)0xAA //used for line/write check 
 
-#define MAX_MESSAGE_CNT 256
 
 
 #define OPENUPS2_SETTINGS_ADDR_START			0x007800

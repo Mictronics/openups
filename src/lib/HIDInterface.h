@@ -26,7 +26,6 @@ struct ATXMSG
 	const char*  strText; // description/comment
 	const char*  strUnit; // measurement unit
 };
-typedef ATXMSG _ATXMSG;
 
 struct UVP
 {

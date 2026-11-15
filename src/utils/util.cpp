@@ -1,13 +1,5 @@
 #include "util.h"
 
-unsigned char hex2bcd (unsigned char x)
-{
-    unsigned char y;
-    y = (x / 10) << 4;
-    y = y | (x % 10);
-    return (y);
-}
-
 unsigned char bcd2hex (unsigned char x)
 {
     unsigned char y;

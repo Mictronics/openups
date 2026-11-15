@@ -7,7 +7,6 @@
 #include <stdio.h>
 
 
-unsigned char hex2bcd (unsigned char x);
 unsigned char bcd2hex (unsigned char x);
 void char2bin(char* destination, unsigned char ch);
 unsigned char bin2char(char* str, bool* ok);

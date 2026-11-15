@@ -12,6 +12,8 @@
 #define OPENUPS_SETTINGS_ADDR_START		0x007800
 #define OPENUPS_SETTINGS_ADDR_END		0x007C00
 
+#define TERMISTOR_CONSTS 34
+
 // Code shared by OpenUPS and OpenUPS2.
 class HIDOpenUPSBase : public HIDInterface
 {
@@ -22,9 +24,19 @@ public:
 	void ReadConfigurationMemory();
 	void EraseConfigurationMemory();
 	void WriteConfigurationMemory();
+	float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier);
+	void convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier);
 
 protected:
+	// Per-device read modes, tried before the shared ones. Return true if handled.
+	virtual bool deviceValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier, double &value) { return false; }
+	// value is the raw field already scaled by dMultiplier.
+	virtual bool deviceValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier, double value) { return false; }
+
 	bool m_bReportWrittenPages; // OpenUPS2 stays quiet while writing
+
+private:
+	int thermistor2Temp(unsigned int termistor);
 };
 
 #endif

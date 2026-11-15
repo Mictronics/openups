@@ -292,85 +292,6 @@ void HIDOpenUPS2::parseMessage(unsigned char *msg)
 	}
 }
 
-float HIDOpenUPS2::convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier)
-{
-	double value = -1;
-
-	if (nLen == 1)
-		value = (double)buffer[nIndex] * dMultiplier;
-	else if (nLen == 2)
-		value = (double)((((int)buffer[nIndex + 1]) << 8) | buffer[nIndex]) * dMultiplier;
-	else if (nLen == 4)
-		value = (double)((((int)buffer[nIndex + 3]) << 24) | (((int)buffer[nIndex + 2]) << 16) | (((int)buffer[nIndex + 1]) << 8) | buffer[nIndex]) * dMultiplier;
-
-	switch (nReadMode)
-	{
-	case 10:
-	{
-		if (nLen == 1)
-			value = (double)buffer[nIndex] * HIDOpenUPS2::GetConstant((int)dMultiplier);
-		else
-			value = (double)((((int)buffer[nIndex + 1]) << 8) | buffer[nIndex]) * HIDOpenUPS2::GetConstant((int)dMultiplier);
-	}
-	break;
-	case 30:
-	{
-		if (nLen == 1)
-			value = (double)buffer[nIndex] * HIDOpenUPS2::GetConstant(6);
-		else
-			value = (double)((((int)buffer[nIndex + 1]) << 8) | buffer[nIndex]) * HIDOpenUPS2::GetConstant(6);
-	}
-	break;
-	case 15:
-	{
-		unsigned int termistor = 0;
-		termistor = buffer[nIndex + 1];
-		termistor = (termistor << 8) | buffer[nIndex];
-
-		if (termistor <= HIDOpenUPS2::GetTermistorConsts()[0])
-			value = -40;
-		else if (termistor >= HIDOpenUPS2::GetTermistorConsts()[TERMISTOR_CONSTS - 1])
-			value = 125;
-		else
-		{
-			int pos = -1;
-			for (int i = TERMISTOR_CONSTS - 1; i >= 0; i--)
-			{
-				if (termistor >= HIDOpenUPS2::GetTermistorConsts()[i])
-				{
-					pos = i;
-					break;
-				}
-			}
-
-			//if (termistor != HIDOpenUPS2::GetTermistorConsts()[i]) pos--;//latest value which is smaller than my one
-
-			if (termistor == HIDOpenUPS2::GetTermistorConsts()[pos])
-				value = pos * 5 - 40;
-			else
-			{
-				int t1 = pos * 5 - 40;
-				int t2 = (pos + 1) * 5 - 40;
-
-				unsigned int d1 = HIDOpenUPS2::GetTermistorConsts()[pos];
-				unsigned int d2 = HIDOpenUPS2::GetTermistorConsts()[pos + 1];
-
-				float dtemp = ((float)termistor - (float)d1) * ((float)t2 - (float)t1) / ((float)d2 - (float)d1);
-
-				int temp = (int)ceil(dtemp) + t1;
-
-				value = temp;
-			}
-		}
-	}
-	break;
-	}
-
-	//DBGOutput("convertOneValue2Float %.3f\n",value);
-
-	return (float)value;
-}
-
 bool HIDOpenUPS2::readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4)
 {
 	bool ok = false;
@@ -658,182 +579,6 @@ bool HIDOpenUPS2::readOneValue(char *str, int nReadMode, double dMultiplier, int
 	return ok;
 }
 
-void HIDOpenUPS2::convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier)
-{
-	destination[0] = 0; //empty string
-	double value = 0;
-
-	if (nLen == 1)
-		value = (double)m_chPackages[nIndex] * dMultiplier;
-	else if (nLen == 2)
-		value = (double)((((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * dMultiplier;
-	else if (nLen == 4)
-		value = (double)((((int)m_chPackages[nIndex + 3]) << 24) | (((int)m_chPackages[nIndex + 2]) << 16) | (((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * dMultiplier;
-
-	switch (nReadMode)
-	{
-	case 2:
-	case 9:
-		sprintf(destination, "%.3f", (float)value);
-		break;
-	case 20:
-		sprintf(destination, "%.2f", (float)value);
-		break;
-	case 10:
-	{
-		if (nLen == 1)
-			value = (double)m_chPackages[nIndex] * HIDOpenUPS2::GetConstant((int)dMultiplier);
-		else if (nLen == 2)
-			value = (double)((((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * HIDOpenUPS2::GetConstant((int)dMultiplier);
-		else if (nLen == 4)
-			value = (double)((((int)m_chPackages[nIndex + 3]) << 24) | (((int)m_chPackages[nIndex + 2]) << 16) | (((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * HIDOpenUPS2::GetConstant((int)dMultiplier);
-		sprintf(destination, "%.3f", (float)value);
-	}
-	break;
-	case 30:
-	{
-		if (nLen == 1)
-			value = (double)m_chPackages[nIndex] * HIDOpenUPS2::GetConstant(6);
-		else if (nLen == 2)
-			value = (double)((((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * HIDOpenUPS2::GetConstant(6);
-		else if (nLen == 4)
-			value = (double)((((int)m_chPackages[nIndex + 3]) << 24) | (((int)m_chPackages[nIndex + 2]) << 16) | (((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * HIDOpenUPS2::GetConstant(6);
-		if (value > dMultiplier)
-			value = dMultiplier;
-		sprintf(destination, "%.3f", (float)value);
-	}
-	break;
-	case 12:
-	case 13:
-		sprintf(destination, "%d", m_chPackages[nIndex]);
-		break;
-	case 14:
-		char2bin(destination, m_chPackages[nIndex]);
-		break;
-	case 15:
-	{
-		unsigned int termistor = 0;
-		termistor = m_chPackages[nIndex + 1];
-		termistor = (termistor << 8) | m_chPackages[nIndex];
-
-		if (termistor <= HIDOpenUPS2::GetTermistorConsts()[0])
-			strcpy(destination, "-40");
-		else if (termistor >= HIDOpenUPS2::GetTermistorConsts()[TERMISTOR_CONSTS - 1])
-			strcpy(destination, "125");
-		else
-		{
-			int pos = -1;
-			for (int i = TERMISTOR_CONSTS - 1; i >= 0; i--)
-			{
-				if (termistor >= HIDOpenUPS2::GetTermistorConsts()[i])
-				{
-					pos = i;
-					break;
-				}
-			}
-
-			//if (termistor != HIDOpenUPS2::GetTermistorConsts()[i]) pos--;//latest value which is smaller than my one
-			if (termistor == HIDOpenUPS2::GetTermistorConsts()[pos])
-				sprintf(destination, "%d", pos * 5 - 40);
-			else
-			{
-				int t1 = pos * 5 - 40;
-				int t2 = (pos + 1) * 5 - 40;
-
-				unsigned int d1 = HIDOpenUPS2::GetTermistorConsts()[pos];
-				unsigned int d2 = HIDOpenUPS2::GetTermistorConsts()[pos + 1];
-
-				float dtemp = ((float)termistor - (float)d1) * ((float)t2 - (float)t1) / ((float)d2 - (float)d1);
-
-				int temp = (int)ceil(dtemp) + t1;
-
-				sprintf(destination, "%d", temp);
-			}
-		}
-	}
-	break;
-	case 16:
-	{ //4 byte value
-		if (dMultiplier == 1)
-			sprintf(destination, "%.0f", (float)value);
-		else
-			sprintf(destination, "%.2f", (float)value);
-	}
-	break;
-	case 17:
-	{
-		sprintf(destination, "%d", (int)value);
-	}
-	break;
-	case 3:
-	{
-		unsigned int ivalue = (unsigned int)value;
-		if (ivalue == 0xFFFF)
-			strcpy(destination, "Never");
-		else
-			sprintf(destination, "%02d:%02d:%02d", ivalue / 3600, (ivalue / 60) % 60, ivalue % 60);
-	}
-	break;
-	case 4:
-	{
-		double dvalue = (m_chPackages[nIndex] & 0x7f) * dMultiplier;
-		if ((m_chPackages[nIndex] & 0x80) != 0)
-			sprintf(destination, "-%.3f", (float)value);
-		else
-			sprintf(destination, "%.3f", (float)value);
-	}
-	break;
-	case 5:
-	{
-		sprintf(destination, "%d", (int)value);
-	}
-	break;
-	case 6:
-	{
-		strcpy(destination, "-");
-	}
-	break;
-	case 7:
-	{	//no multiplier - voltage value calcualted with formula
-		//! sprintf(destination, "%.3f", HIDOpenUPS2::GetVoltageVOut(m_chPackages[nIndex]));
-	}
-	break;
-	case 8:
-	{
-		if (nLen == 1)
-		{
-			if (m_chPackages[nIndex] == 0xFF)
-				strcpy(destination, "Never");
-			else
-				sprintf(destination, "%d", (int)value);
-		}
-		else
-		{
-			if ((m_chPackages[nIndex] == 0xFF) && (m_chPackages[nIndex + 1] == 0xFF))
-				strcpy(destination, "Never");
-			else
-				sprintf(destination, "%d", (int)value);
-		}
-	}
-	break;
-	case 40: //hex
-		if (nLen == 1)
-			sprintf(destination, "%02x", (int)value);
-		else if (nLen == 2)
-			sprintf(destination, "%04x", (int)value);
-		else if (nLen == 4)
-			sprintf(destination, "%08x", (int)value);
-		break;
-	case 1:
-	default:
-	{
-		sprintf(destination, "%d", (int)value);
-	}
-	}
-
-	//DBGOutput("convertOneValue2String %d %s %f [%x][%x]\n",nIndex,destination,(float)value,(int)m_chPackages[nIndex],(int)m_chPackages[nIndex+1]);
-}
-
 bool HIDOpenUPS2::setVariableData(int mesg_no, char *str)
 {
 	int len = HIDOpenUPS2::GetMessages()[mesg_no].nLen;
@@ -941,4 +686,69 @@ void HIDOpenUPS2::GetStatus()
 	ret = sendMessage(OPENUPS2_CLOCK_OUT, 0);
 	recvMessage(recv);
 	parseMessage(recv);
+}
+
+bool HIDOpenUPS2::deviceValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier, double &value)
+{
+	if (nReadMode != 30)
+		return false;
+
+	if (nLen == 1)
+		value = (double)buffer[nIndex] * GetConstant(6);
+	else
+		value = (double)((((int)buffer[nIndex + 1]) << 8) | buffer[nIndex]) * GetConstant(6);
+	return true;
+}
+
+bool HIDOpenUPS2::deviceValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier, double value)
+{
+	switch (nReadMode)
+	{
+	case 2:
+	case 9:
+		sprintf(destination, "%.3f", (float)value);
+		break;
+	case 10:
+		if (nLen == 1)
+			value = (double)m_chPackages[nIndex] * GetConstant((int)dMultiplier);
+		else if (nLen == 2)
+			value = (double)((((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * GetConstant((int)dMultiplier);
+		else if (nLen == 4)
+			value = (double)((((int)m_chPackages[nIndex + 3]) << 24) | (((int)m_chPackages[nIndex + 2]) << 16) | (((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * GetConstant((int)dMultiplier);
+		sprintf(destination, "%.3f", (float)value);
+		break;
+	case 30:
+		if (nLen == 1)
+			value = (double)m_chPackages[nIndex] * GetConstant(6);
+		else if (nLen == 2)
+			value = (double)((((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * GetConstant(6);
+		else if (nLen == 4)
+			value = (double)((((int)m_chPackages[nIndex + 3]) << 24) | (((int)m_chPackages[nIndex + 2]) << 16) | (((int)m_chPackages[nIndex + 1]) << 8) | m_chPackages[nIndex]) * GetConstant(6);
+		if (value > dMultiplier)
+			value = dMultiplier;
+		sprintf(destination, "%.3f", (float)value);
+		break;
+	case 4: // sign bit set: negated output of the unmasked raw value (existing behavior, kept as is)
+		if ((m_chPackages[nIndex] & 0x80) != 0)
+			sprintf(destination, "-%.3f", (float)value);
+		else
+			sprintf(destination, "%.3f", (float)value);
+		break;
+	case 5:
+		sprintf(destination, "%d", (int)value);
+		break;
+	case 7: // intentionally empty
+		break;
+	case 40: // hex
+		if (nLen == 1)
+			sprintf(destination, "%02x", (int)value);
+		else if (nLen == 2)
+			sprintf(destination, "%04x", (int)value);
+		else if (nLen == 4)
+			sprintf(destination, "%08x", (int)value);
+		break;
+	default:
+		return false;
+	}
+	return true;
 }

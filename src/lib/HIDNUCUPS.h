@@ -85,15 +85,14 @@ class HIDNUCUPS: public HIDInterface {
 		void printValues();
 		float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier);
 		bool readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
+		bool readFieldValue(int mesg_no, char *str, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
 		bool readOneValue(int mesg_no, char* str, int nReadMode, double dMultiplier, int len, double dMin, double dMax, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
 
 		void convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier);
-		bool setVariableData(int mesg_no, char *str);
 		ATXMSG* GetMessages();
 		double GetConstant(int i);
 		unsigned int* GetTermistorConsts();
 		unsigned int GetSpecialConstants(unsigned int type, unsigned int cnt);
-		unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment);
 		void restartUPS();
 		void restartUPSInBootloaderMode();
 

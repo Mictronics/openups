@@ -582,6 +582,14 @@ float HIDNUCUPS::convertOneValue2Float(unsigned char *buffer, int nLen, int nInd
 	return (float)value;
 }
 
+bool HIDNUCUPS::readFieldValue(int mesg_no, char *str, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4)
+{
+	const ATXMSG &msg = GetMessages()[mesg_no];
+	if (!msg.bEnabled)
+		return false; // read only variable
+	return readOneValue(mesg_no, str, msg.nReadMode, msg.dMultiplier, msg.nLen, msg.dLimitMin, msg.dLimitMax, c1, c2, c3, c4);
+}
+
 bool HIDNUCUPS::readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4)
 {
     return false;
@@ -1229,51 +1237,6 @@ void HIDNUCUPS::convertOneValue2String(char *destination, int nLen, int nIndex, 
 	}
 }
 
-bool HIDNUCUPS::setVariableData(int mesg_no, char *str)
-{
-    int len = GetMessages()[mesg_no].nLen;
-
-	if (len!=0)
-	{
-		if (!GetMessages()[mesg_no].bEnabled) return 0;//read only variable
-
-		unsigned char c1 = 0;
-		unsigned char c2 = 0;
-		unsigned char c3 = 0;
-		unsigned char c4 = 0;
-
-		if (readOneValue(mesg_no
-						,str
-						,GetMessages()[mesg_no].nReadMode
-						,GetMessages()[mesg_no].dMultiplier
-						,len
-						,GetMessages()[mesg_no].dLimitMin
-						,GetMessages()[mesg_no].dLimitMax
-						,c1, c2, c3, c4))
-		{
-			switch (len)
-			{
-			case 1:
-				m_chPackages[GetMessages()[mesg_no].nIndex]   = c2;
-				break;
-			case 2:
-				m_chPackages[GetMessages()[mesg_no].nIndex]   = c1;
-				m_chPackages[GetMessages()[mesg_no].nIndex+1] = c2;
-				break;
-			case 4:
-				m_chPackages[GetMessages()[mesg_no].nIndex]   = c1;
-				m_chPackages[GetMessages()[mesg_no].nIndex+1] = c2;
-				m_chPackages[GetMessages()[mesg_no].nIndex+2] = c3;
-				m_chPackages[GetMessages()[mesg_no].nIndex+3] = c4;
-				break;
-			}
-			return 1;
-		}
-		else return 0;
-	}
-	return 1;
-}
-
 ATXMSG* HIDNUCUPS::GetMessages()
 {
 	return g_NUCUPS_memMessages;
@@ -1301,32 +1264,6 @@ unsigned int HIDNUCUPS::GetSpecialConstants(unsigned int type, unsigned int cnt)
         case 106: if (cnt < 4) return g_NUCUPS_memOVDelay[cnt]; break;
 	}
 	return -1;
-}
-
-unsigned char HIDNUCUPS::getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment)
-{
-    if ((cnt < 0) || (cnt >= MAX_MESSAGE_CNT))
-		return 0;
-
-	if (GetMessages()[cnt].nLen == 0)
-		return 0;
-
-	if (name)
-		strcpy(name, GetMessages()[cnt].strName);
-	if (unit)
-		strcpy(unit, GetMessages()[cnt].strUnit);
-	if (comment)
-		strcpy(comment, GetMessages()[cnt].strText);
-
-	if (value)
-	{
-		convertOneValue2String(value, GetMessages()[cnt].nLen,
-							   GetMessages()[cnt].nIndex,
-							   GetMessages()[cnt].nReadMode,
-							   GetMessages()[cnt].dMultiplier);
-	}
-
-	return GetMessages()[cnt].nReadMode;
 }
 
 void HIDNUCUPS::restartUPS()

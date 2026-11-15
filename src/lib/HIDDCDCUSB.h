@@ -94,12 +94,10 @@ public:
 	bool readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
 	float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier);
 	void convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier);
-	bool setVariableData(int mesg_no, char *str);
 	ATXMSG *GetMessages();
 	double GetConstant(int i);
 	unsigned int *GetTermistorConsts();
 	int GetMessageIdxByName(const char *name);
-	unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment);
 	void restartUPS();
 	void restartUPSInBootloaderMode();
 	

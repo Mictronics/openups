@@ -69,11 +69,11 @@ class HIDInterface {
 		virtual float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier) = 0;
 		virtual bool readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4) = 0;
 		virtual void convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier) = 0;
-		virtual bool setVariableData(int mesg_no, char *str) = 0;
+		bool setVariableData(int mesg_no, char *str);
 		virtual ATXMSG* GetMessages() = 0;
 		virtual double GetConstant(int i) = 0;
 		virtual unsigned int* GetTermistorConsts() = 0;
-		virtual unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment) = 0;
+		unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment);
 		virtual void restartUPS() = 0;
 		virtual void restartUPSInBootloaderMode() = 0;
 
@@ -81,6 +81,13 @@ class HIDInterface {
 		unsigned char m_chPackages[SETTINGS_PACKS * 16];
 
 		USBHID *d;
+
+	protected:
+		// Parses str for message mesg_no; devices override to add checks.
+		virtual bool readFieldValue(int mesg_no, char *str, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
+
+		unsigned int m_nMaxMessages; // size of this device's ATXMSG table
+		bool m_bEmptyFieldOk;        // setVariableData result for a zero-length field (OpenUPS: false)
 };
 
 #endif // _HIDINTERFACE_H_

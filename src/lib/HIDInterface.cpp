@@ -19,6 +19,8 @@
 
 HIDInterface::HIDInterface(USBHID *hidDevice) {
 	d = hidDevice;
+	m_nMaxMessages = MAX_MESSAGE_CNT;
+	m_bEmptyFieldOk = true;
 	memset(m_chPackages, 0, SETTINGS_PACKS * 16);
 }
 
@@ -255,4 +257,66 @@ struct EXEC* HIDInterface::parseCommand(char *cmdexpr) {
 bool HIDInterface::executeCommand(char *cmdexpr) {
 	fprintf(stderr, "Commands not implemented !\n");	
 	return false;
+}
+bool HIDInterface::readFieldValue(int mesg_no, char *str, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4)
+{
+	const ATXMSG &msg = GetMessages()[mesg_no];
+	return readOneValue(str, msg.nReadMode, msg.dMultiplier, msg.nLen, c1, c2, c3, c4);
+}
+
+bool HIDInterface::setVariableData(int mesg_no, char *str)
+{
+	ATXMSG &msg = GetMessages()[mesg_no];
+	int len = msg.nLen;
+
+	if (len == 0)
+		return m_bEmptyFieldOk;
+
+	unsigned char c1 = 0;
+	unsigned char c2 = 0;
+	unsigned char c3 = 0;
+	unsigned char c4 = 0;
+
+	if (!readFieldValue(mesg_no, str, c1, c2, c3, c4))
+		return false;
+
+	switch (len)
+	{
+	case 1:
+		m_chPackages[msg.nIndex] = c2;
+		break;
+	case 2:
+		m_chPackages[msg.nIndex] = c1;
+		m_chPackages[msg.nIndex + 1] = c2;
+		break;
+	case 4:
+		m_chPackages[msg.nIndex] = c1;
+		m_chPackages[msg.nIndex + 1] = c2;
+		m_chPackages[msg.nIndex + 2] = c3;
+		m_chPackages[msg.nIndex + 3] = c4;
+		break;
+	}
+	return true;
+}
+
+unsigned char HIDInterface::getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment)
+{
+	if (cnt >= m_nMaxMessages)
+		return 0;
+
+	ATXMSG &msg = GetMessages()[cnt];
+	if (msg.nLen == 0)
+		return 0;
+
+	if (name)
+		strcpy(name, msg.strName);
+	if (unit)
+		strcpy(unit, msg.strUnit);
+	if (comment)
+		strcpy(comment, msg.strText);
+
+	if (value)
+		convertOneValue2String(value, msg.nLen, msg.nIndex, msg.nReadMode, msg.dMultiplier);
+
+	return msg.nReadMode;
 }

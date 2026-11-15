@@ -1,7 +1,5 @@
 #include "util.h"
-#ifndef _WIN32
 #include <stdarg.h>
-#endif
 #include "HArray.h"
 
 
@@ -129,21 +127,13 @@ void HArray::setHIDPkt(unsigned char rid, unsigned int rlen, unsigned int len, .
 	va_list args;
 	va_start(args, len);
 	unsigned int cnt = 0;
-#ifdef _WIN32	
-	unsigned char i = va_arg(args, unsigned char);
-#else
 	unsigned char i = va_arg(args, unsigned int);
-#endif
 	while (cnt<len)
 	{
 		m_pArray[1+cnt] = i;
 		cnt++;
 		if (cnt < len)
-#ifdef _WIN32			
-		 	i = va_arg(args, unsigned char);
-#else
 			i = va_arg(args, unsigned int);
-#endif
 	}
 	
 	va_end(args);

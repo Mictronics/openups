@@ -2,26 +2,9 @@
 #define _UTIL_H_
 #pragma once
 
-// Windows Header Files:
-#ifdef _WIN32
-#include <windows.h>
-#include <tchar.h>
-#include <crtdbg.h>
-#else
-#define TCHAR char
-#define _TCHAR char
-#define _T(s) s
-#define _tcstol strtol
-#define _strcmpi strcmp
-#define _tcstod strtod
-#endif
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-
-#define _CRTDBG_MAP_ALLOC
 
 
 unsigned char hex2bcd (unsigned char x);

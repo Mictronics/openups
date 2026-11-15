@@ -1,11 +1,7 @@
 #ifndef __HARRAY_H__
 #define __HARRAY_H__
 
-#ifdef HIDAPI_EXPORTS
-class HIDAPI_API HArray  
-#else
 class HArray
-#endif
 {
 public:
 	HArray();

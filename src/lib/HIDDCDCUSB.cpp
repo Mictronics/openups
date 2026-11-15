@@ -22,79 +22,79 @@ unsigned int g_DCDCUSB_memTerm[] = {(unsigned int)0x01};
 
 ATXMSG g_DCDCUSB_memMessages[DCDCUSB_MAX_MESSAGE_CNT] =
 	{
-		{52, 1, _T("VOLTAGE_0"), true, 7, 0, 0, 0, _T("Set Output Voltage 0. Changes will take effect after a power cycle."), _T("[V]")},
-		{53, 1, _T("VOLTAGE_1"), true, 7, 0, 0, 0, _T("Set Output Voltage 1. Changes will take effect after a power cycle."), _T("[V]")},
-		{54, 1, _T("VOLTAGE_2"), true, 7, 0, 0, 0, _T("Set Output Voltage 2. Changes will take effect after a power cycle."), _T("[V]")},
-		{55, 1, _T("VOLTAGE_3"), true, 7, 0, 0, 0, _T("Set Output Voltage 3. Changes will take effect after a power cycle."), _T("[V]")},
-		{56, 1, _T("VOLTAGE_4"), true, 7, 0, 0, 0, _T("Set Output Voltage 4. Changes will take effect after a power cycle."), _T("[V]")},
-		{57, 1, _T("VOLTAGE_5"), true, 7, 0, 0, 0, _T("Set Output Voltage 5. Changes will take effect after a power cycle."), _T("[V]")},
-		{58, 1, _T("VOLTAGE_6"), true, 7, 0, 0, 0, _T("Set Output Voltage 6. Changes will take effect after a power cycle."), _T("[V]")},
-		{59, 1, _T("VOLTAGE_7"), true, 7, 0, 0, 0, _T("Set Output Voltage 7. Changes will take effect after a power cycle."), _T("[V]")},
+		{52, 1, "VOLTAGE_0", true, 7, 0, 0, 0, "Set Output Voltage 0. Changes will take effect after a power cycle.", "[V]"},
+		{53, 1, "VOLTAGE_1", true, 7, 0, 0, 0, "Set Output Voltage 1. Changes will take effect after a power cycle.", "[V]"},
+		{54, 1, "VOLTAGE_2", true, 7, 0, 0, 0, "Set Output Voltage 2. Changes will take effect after a power cycle.", "[V]"},
+		{55, 1, "VOLTAGE_3", true, 7, 0, 0, 0, "Set Output Voltage 3. Changes will take effect after a power cycle.", "[V]"},
+		{56, 1, "VOLTAGE_4", true, 7, 0, 0, 0, "Set Output Voltage 4. Changes will take effect after a power cycle.", "[V]"},
+		{57, 1, "VOLTAGE_5", true, 7, 0, 0, 0, "Set Output Voltage 5. Changes will take effect after a power cycle.", "[V]"},
+		{58, 1, "VOLTAGE_6", true, 7, 0, 0, 0, "Set Output Voltage 6. Changes will take effect after a power cycle.", "[V]"},
+		{59, 1, "VOLTAGE_7", true, 7, 0, 0, 0, "Set Output Voltage 7. Changes will take effect after a power cycle.", "[V]"},
 
-		{0, 1, _T("IGNITION_HIGH_LIMIT"), true, 2, 0.1558, 0, 0, _T("Above this voltage IGN is considered ON"), _T("[V]")},
-		{1, 1, _T("IGNITION_LOW_LIMIT"), true, 2, 0.1558, 0, 0, _T("Below this voltage IGN is considered OFF"), _T("[V]")},
-		{2, 1, _T("IGNITION_DEBOUNCE"), false, 1, 10, 0, 0, _T("Ignition filter de-bouncing"), _T("[ms]")},
+		{0, 1, "IGNITION_HIGH_LIMIT", true, 2, 0.1558, 0, 0, "Above this voltage IGN is considered ON", "[V]"},
+		{1, 1, "IGNITION_LOW_LIMIT", true, 2, 0.1558, 0, 0, "Below this voltage IGN is considered OFF", "[V]"},
+		{2, 1, "IGNITION_DEBOUNCE", false, 1, 10, 0, 0, "Ignition filter de-bouncing", "[ms]"},
 
-		{30, 1, _T("AUTOMOTIVE_IGNITION_CANCEL_TIME"), true, 1, 1, 0, 0, _T("After DCDC-USB \"boots\" in AUTOMOTIVE mode IGN is cancelled for this time"), _T("[sec]")},
-		{14, 1, _T("AUTOMOTIVE_THUMP_TIMEOUT"), true, 1, 1, 0, 0, _T("THUMP timeout, switching off the audio amplifier during motherboard startup/shutdown"), _T("[sec]")},
+		{30, 1, "AUTOMOTIVE_IGNITION_CANCEL_TIME", true, 1, 1, 0, 0, "After DCDC-USB \"boots\" in AUTOMOTIVE mode IGN is cancelled for this time", "[sec]"},
+		{14, 1, "AUTOMOTIVE_THUMP_TIMEOUT", true, 1, 1, 0, 0, "THUMP timeout, switching off the audio amplifier during motherboard startup/shutdown", "[sec]"},
 
-		{3, 1, _T("DELAY_BEFORE_PSU_STARTUP"), true, 1, 1, 0, 0, _T("Initial startup delay to avoid re-cranking problems"), _T("[s]")},
-		{4, 1, _T("MIN_VIN_VOLTAGE_AT_STARTUP"), true, 2, 0.1558, 0, 0, _T("Input voltage STARTUP ZONE treshold "), _T("[V]")},
-		{5, 1, _T("MIN_VIN_VOLTAGE_WHILE_RUNNING"), true, 2, 0.1558, 0, 0, _T("Input voltage RUNNING ZONE treshold "), _T("[V]")},
-		{6, 1, _T("MAX_ALLOWED_VIN_VOLTAGE"), false, 2, 0.1558, 0, 0, _T("Input voltage, HIGH SHUTDOWN treshold [35V]"), _T("[V]")},
+		{3, 1, "DELAY_BEFORE_PSU_STARTUP", true, 1, 1, 0, 0, "Initial startup delay to avoid re-cranking problems", "[s]"},
+		{4, 1, "MIN_VIN_VOLTAGE_AT_STARTUP", true, 2, 0.1558, 0, 0, "Input voltage STARTUP ZONE treshold ", "[V]"},
+		{5, 1, "MIN_VIN_VOLTAGE_WHILE_RUNNING", true, 2, 0.1558, 0, 0, "Input voltage RUNNING ZONE treshold ", "[V]"},
+		{6, 1, "MAX_ALLOWED_VIN_VOLTAGE", false, 2, 0.1558, 0, 0, "Input voltage, HIGH SHUTDOWN treshold [35V]", "[V]"},
 
-		{63, 1, _T("MIN_VIN_VOLTAGE_DEEP_DISCHARGE"), true, 2, 0.1558, 0, 0, _T("Minimum VIN voltage measured during off delay"), _T("[V]")},
+		{63, 1, "MIN_VIN_VOLTAGE_DEEP_DISCHARGE", true, 2, 0.1558, 0, 0, "Minimum VIN voltage measured during off delay", "[V]"},
 
-		{7, 1, _T("ON_PULSE_DELAY"), true, 1, 1, 0, 0, _T("Delay between output is ON and startup pulse is sent\n(v4.3+)"), _T("[s]")},
-		//	{ 8, 1, _T("Min. limit for Voltage")			, true, 2, 0.1558,0,0	, _T("MIN voltage treshold"), _T("[V]") },
-		{9, 1, _T("REGULATOR_OFFSET"), true, 1, 1, 0, 0, _T("Regulator offset (firmware version >= v2.0)"), _T("")},
-		{10, 2, _T("PSW_PUSH_DOWN_TIME"), true, 1, 10, 0, 0, _T("How long the PSW button is pressed down"), _T("[ms]")},
-		//{11, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		//	{ 12, 1, _T("Emergency timeout")				, true, 1, 1,0,0					, _T("Delay"), _T("[s]") },
-		{13, 1, _T("CONFIGURATION_FLAGS"), true, 9, 1, 0, 0, _T("Configuration flags: bit0=Regulator Enabled/Disabled(v2.0+)\nbit1=Power cycle On/Off(v2.1+)\nbit2=On pulse enable/disable bit3=Off pulse enable/disable(v3.1+)\nbit4=USB sense enable/disable(v4.0+)\nbit5=Ignition pulse enable/disable(v4.2+)"), _T("")},
-		{15, 1, _T("MAX_REGULATION_STEP_NUMBER"), true, 1, 1, 0, 0, _T("Maximum allowed regulation step number (0-255) (firmware version >= v2.0)"), _T("")},
+		{7, 1, "ON_PULSE_DELAY", true, 1, 1, 0, 0, "Delay between output is ON and startup pulse is sent\n(v4.3+)", "[s]"},
+		//	{ 8, 1, "Min. limit for Voltage"			, true, 2, 0.1558,0,0	, "MIN voltage treshold", "[V]" },
+		{9, 1, "REGULATOR_OFFSET", true, 1, 1, 0, 0, "Regulator offset (firmware version >= v2.0)", ""},
+		{10, 2, "PSW_PUSH_DOWN_TIME", true, 1, 10, 0, 0, "How long the PSW button is pressed down", "[ms]"},
+		//{11, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		//	{ 12, 1, "Emergency timeout"				, true, 1, 1,0,0					, "Delay", "[s]" },
+		{13, 1, "CONFIGURATION_FLAGS", true, 9, 1, 0, 0, "Configuration flags: bit0=Regulator Enabled/Disabled(v2.0+)\nbit1=Power cycle On/Off(v2.1+)\nbit2=On pulse enable/disable bit3=Off pulse enable/disable(v3.1+)\nbit4=USB sense enable/disable(v4.0+)\nbit5=Ignition pulse enable/disable(v4.2+)", ""},
+		{15, 1, "MAX_REGULATION_STEP_NUMBER", true, 1, 1, 0, 0, "Maximum allowed regulation step number (0-255) (firmware version >= v2.0)", ""},
 
-		{16, 2, _T("OFF_DELAY_TIME_0"), false, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 0 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{17, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{18, 2, _T("HARD_OFF_TIME_0"), false, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 0 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{19, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{20, 2, _T("OFF_DELAY_TIME_1"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 1 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{21, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{22, 2, _T("HARD_OFF_TIME_1"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 1 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{23, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{24, 2, _T("OFF_DELAY_TIME_2"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 2 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{25, 0, _T("FILLER")							, true, 1, 1		, _T(""), _T("") },
-		{26, 2, _T("HARD_OFF_TIME_2"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 2 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{27, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{28, 2, _T("OFF_DELAY_TIME_3"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 3 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{29, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
+		{16, 2, "OFF_DELAY_TIME_0", false, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 0 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{17, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{18, 2, "HARD_OFF_TIME_0", false, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 0 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{19, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{20, 2, "OFF_DELAY_TIME_1", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 1 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{21, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{22, 2, "HARD_OFF_TIME_1", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 1 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{23, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{24, 2, "OFF_DELAY_TIME_2", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 2 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{25, 0, "FILLER"							, true, 1, 1		, "", "" },
+		{26, 2, "HARD_OFF_TIME_2", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 2 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{27, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{28, 2, "OFF_DELAY_TIME_3", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 3 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{29, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
 
-		{32, 2, _T("HARD_OFF_TIME_3"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 3 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{33, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{34, 2, _T("OFF_DELAY_TIME_4"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 4 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{35, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{36, 2, _T("HARD_OFF_TIME_4"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 4 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{37, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{38, 2, _T("OFF_DELAY_TIME_5"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 5 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{39, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{40, 2, _T("HARD_OFF_TIME_5"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 5 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{41, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{42, 2, _T("OFF_DELAY_TIME_6"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 6 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{43, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{44, 2, _T("HARD_OFF_TIME_6"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 6 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{45, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
+		{32, 2, "HARD_OFF_TIME_3", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 3 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{33, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{34, 2, "OFF_DELAY_TIME_4", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 4 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{35, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{36, 2, "HARD_OFF_TIME_4", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 4 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{37, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{38, 2, "OFF_DELAY_TIME_5", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 5 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{39, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{40, 2, "HARD_OFF_TIME_5", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 5 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{41, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{42, 2, "OFF_DELAY_TIME_6", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 6 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{43, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{44, 2, "HARD_OFF_TIME_6", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 6 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{45, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
 
-		{48, 2, _T("OFF_DELAY_TIME_7"), true, 3, 1, 0, 0, _T("Time between IGN OFF to PSW OFF impulse in Time Configuration 7 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{49, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
-		{50, 2, _T("HARD_OFF_TIME_7"), true, 3, 1, 0, 0, _T("Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 7 (max. 17:59:59 or Never)"), _T("[hh:mm:ss]")},
-		//{51, 0, _T("FILLER")							, true, 1, 1,0,0		, _T(""), _T("") },
+		{48, 2, "OFF_DELAY_TIME_7", true, 3, 1, 0, 0, "Time between IGN OFF to PSW OFF impulse in Time Configuration 7 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{49, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
+		{50, 2, "HARD_OFF_TIME_7", true, 3, 1, 0, 0, "Time Between PSW OFF to Output OFF,Hardware OFF in Time Configuration 7 (max. 17:59:59 or Never)", "[hh:mm:ss]"},
+		//{51, 0, "FILLER"							, true, 1, 1,0,0		, "", "" },
 
-		{46, 1, _T("UPS_MODE_SHUTDOWN_TIME"), true, 1, 1, 0, 0, _T("After OFF impulse is sent wait \"UPS Mode: Shutdown Time\" till Output OFF,Hardware OFF"), _T("[sec]")},
-		{47, 1, _T("UPS_MODE_IGNITION_OFF_TIME"), true, 1, 1, 0, 0, _T("If IGN is OFF for \"UPS Mode: Ignition OFF time\" time the PSU will send OFF impulse"), _T("[sec]")},
+		{46, 1, "UPS_MODE_SHUTDOWN_TIME", true, 1, 1, 0, 0, "After OFF impulse is sent wait \"UPS Mode: Shutdown Time\" till Output OFF,Hardware OFF", "[sec]"},
+		{47, 1, "UPS_MODE_IGNITION_OFF_TIME", true, 1, 1, 0, 0, "If IGN is OFF for \"UPS Mode: Ignition OFF time\" time the PSU will send OFF impulse", "[sec]"},
 
-		{60, 1, _T("UPS_MODE_IGNITION_ON"), true, 2, 0.1558, 0, 0, _T("PSU will be ON if IGN>\"UPS Mode: Ignition ON\" (and VIN>\"UPS Mode: VIn Good\")"), _T("[V]")},
-		{61, 1, _T("UPS_MODE_IGNITION_OFF"), true, 2, 0.1558, 0, 0, _T("PSU will be OFF if IGN<\"UPS Mode: Ignition OFF\" for \"UPS Mode: Ignition OFF time\" seconds"), _T("[V]")},
-		{62, 1, _T("UPS_MODE_VIN_GOOD"), true, 2, 0.1558, 0, 0, _T("PSU will be ON if VIN>\"UPS Mode: VIn Good\" (and IGN>\"UPS Mode: Ignition ON\")"), _T("[V]")},
+		{60, 1, "UPS_MODE_IGNITION_ON", true, 2, 0.1558, 0, 0, "PSU will be ON if IGN>\"UPS Mode: Ignition ON\" (and VIN>\"UPS Mode: VIn Good\")", "[V]"},
+		{61, 1, "UPS_MODE_IGNITION_OFF", true, 2, 0.1558, 0, 0, "PSU will be OFF if IGN<\"UPS Mode: Ignition OFF\" for \"UPS Mode: Ignition OFF time\" seconds", "[V]"},
+		{62, 1, "UPS_MODE_VIN_GOOD", true, 2, 0.1558, 0, 0, "PSU will be ON if VIN>\"UPS Mode: VIn Good\" (and IGN>\"UPS Mode: Ignition ON\")", "[V]"},
 };
 
 double HIDDCDCUSB::GetVOut(unsigned char data)
@@ -342,18 +342,18 @@ bool HIDDCDCUSB::readOneValue(char *str, int nReadMode, double dMultiplier, int 
 		}
 		else if ((strlen(str) == 8) && (str[2] == ':') && (str[5] == ':'))
 		{
-			_TCHAR *end = NULL;
+			char *end = NULL;
 			char temps[10];
 			str_left(temps, str, 2);
-			int hh = _tcstol(temps, &end, 10);
+			int hh = strtol(temps, &end, 10);
 			if ((end != temps) && (hh >= 0) && (hh < 18))
 			{
 				str_mid(temps, str, 3, 2);
-				int mm = _tcstol(temps, &end, 10);
+				int mm = strtol(temps, &end, 10);
 				if ((end != temps) && (mm >= 0) && (mm < 60))
 				{
 					str_right(temps, str, 2);
-					int ss = _tcstol(temps, &end, 10);
+					int ss = strtol(temps, &end, 10);
 
 					if ((end != temps) && (ss >= 0) && (ss < 60))
 					{
@@ -380,9 +380,9 @@ bool HIDDCDCUSB::readOneValue(char *str, int nReadMode, double dMultiplier, int 
 				negative = true;
 			}
 
-			_TCHAR *end = NULL;
+			char *end = NULL;
 			str_left(temps2, str, 8);
-			val = _tcstod(temps2, &end);
+			val = strtod(temps2, &end);
 
 			if ((end != temps2))
 			{
@@ -415,10 +415,10 @@ bool HIDDCDCUSB::readOneValue(char *str, int nReadMode, double dMultiplier, int 
 	break;
 	case 7:
 	{
-		_TCHAR *end = NULL;
+		char *end = NULL;
 		char temps[10];
 		str_left(temps, str, 8);
-		val = _tcstod(temps, &end);
+		val = strtod(temps, &end);
 
 		if ((val < 5) || (val > 25.53))
 		{
@@ -441,10 +441,10 @@ bool HIDDCDCUSB::readOneValue(char *str, int nReadMode, double dMultiplier, int 
 		}
 		else
 		{
-			TCHAR *end = NULL;
+			char *end = NULL;
 			char temps[10];
 			str_left(temps, str, 8);
-			val = _tcstod(temps, &end);
+			val = strtod(temps, &end);
 			if (end != temps)
 				ok = true;
 		}
@@ -462,10 +462,10 @@ bool HIDDCDCUSB::readOneValue(char *str, int nReadMode, double dMultiplier, int 
 	case 5:
 	default:
 	{ //normal read - float
-		_TCHAR *end = NULL;
+		char *end = NULL;
 		char temps[10];
 		str_left(temps, str, 8);
-		val = _tcstod(temps, &end);
+		val = strtod(temps, &end);
 
 		//					CString err;
 		//					err.Format("Convert: (%f) (%d) (%s)",val, errno, str.Left(8));

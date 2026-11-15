@@ -16,90 +16,90 @@ double g_NUCUPS_memConstants[]=
 
 ATXMSG g_NUCUPS_memMessages[MAX_MESSAGE_CNT] = 
 {
-	{0x00, 2, _T("NUC_UPS_MODE")					, true, 1, 1, 0, 0      , _T("0-Dumb mode	                           (DUMB)\r\n1-Automotive mode	   	     (AUTOMOTIVE)"), _T("[-]")  },
-	{0x02, 2, _T("UPS_ON_BATTERY_TOUT")			    , true, 3, 1, 0, 0, _T("Deep sleep timeout. If system is running on battery and this period has elapsed with no input power applied, the UPS will initiate shut down procedure. \"Never\" is allowed as value (to disable this feature). Default is \"Never\"."), _T("[hh:mm:ss]") },
-	{0x04, 2, _T("INIT_TOUT")						, true, 1,10, 0, 0, _T("When all power supply start-up conditions are met the PSU will wait this time before continuing with the start-up sequence.\r\nDefault is 1000ms."), _T("[ms]") },
-	{0x06, 2, _T("VIN_MIN_STARTUP")					, true, 1, 1, 6000, 50000, _T("If the input voltage is beyond this threshold and all other start-up conditions are met, the PSU can start.\r\nDefault is 11V."), _T("[mV]") },
-	{0x08, 2, _T("VIN_MIN_RUNNING")					, true, 1, 1, 6000, 50000, _T("If input voltage is below this threshold, the output is powered from battery.\r\nDefault is 8V."), _T("[mV]") },
-	//{0x0A, 2, _T("VIN_MAX_SHUTDOWN")				, true, 1, 1, 0, 0, _T("?"), _T("[-]") },
-	{0x0C, 2, _T("VIN_COUNT")						, true, 1,10, 0, 0, _T("Input voltage filtering.\r\nDefault is 100ms."), _T("[ms]") },
-	{0x0E, 2, _T("IGN_COUNT")						, true, 1,10, 0, 0, _T("Ignition voltage filtering.\r\nDefault is 100ms."), _T("[ms]") },
+	{0x00, 2, "NUC_UPS_MODE"					, true, 1, 1, 0, 0      , "0-Dumb mode	                           (DUMB)\r\n1-Automotive mode	   	     (AUTOMOTIVE)", "[-]"  },
+	{0x02, 2, "UPS_ON_BATTERY_TOUT"			    , true, 3, 1, 0, 0, "Deep sleep timeout. If system is running on battery and this period has elapsed with no input power applied, the UPS will initiate shut down procedure. \"Never\" is allowed as value (to disable this feature). Default is \"Never\".", "[hh:mm:ss]" },
+	{0x04, 2, "INIT_TOUT"						, true, 1,10, 0, 0, "When all power supply start-up conditions are met the PSU will wait this time before continuing with the start-up sequence.\r\nDefault is 1000ms.", "[ms]" },
+	{0x06, 2, "VIN_MIN_STARTUP"					, true, 1, 1, 6000, 50000, "If the input voltage is beyond this threshold and all other start-up conditions are met, the PSU can start.\r\nDefault is 11V.", "[mV]" },
+	{0x08, 2, "VIN_MIN_RUNNING"					, true, 1, 1, 6000, 50000, "If input voltage is below this threshold, the output is powered from battery.\r\nDefault is 8V.", "[mV]" },
+	//{0x0A, 2, "VIN_MAX_SHUTDOWN"				, true, 1, 1, 0, 0, "?", "[-]" },
+	{0x0C, 2, "VIN_COUNT"						, true, 1,10, 0, 0, "Input voltage filtering.\r\nDefault is 100ms.", "[ms]" },
+	{0x0E, 2, "IGN_COUNT"						, true, 1,10, 0, 0, "Ignition voltage filtering.\r\nDefault is 100ms.", "[ms]" },
 	
-	{0x10, 2, _T("IGN_HIGH_THRESHOLD")				, true, 1, 1, 0, 0, _T("If ignition voltage is beyond this threshold, ignition is considered to be ON.\r\nDefault is 6V."), _T("[mV]") },
-	{0x12, 2, _T("IGN_LOW_THRESHOLD")				, true, 1, 1, 0, 0, _T("If ignition voltage is below this threshold, ignition is considered to be OFF.\r\nDefault is 5V."), _T("[mV]") },
-	{0x14, 2, _T("IGN_ON_TO_OUTPUT_ON_TOUT")		, true, 1,10, 0, 0, _T("After ignition is considered ON, the PSU will wait this time before the output is turned ON.\r\nDefault is 2000ms."), _T("[ms]") },
-	{0x16, 2, _T("IGN_CANCEL_TOUT")					, true, 1, 1, 0, 0, _T("After the motherboard boots up, the ignition voltage sensing will be disabled for this period.\r\nDefault is 60s."), _T("[s]") },
-	{0x18, 2, _T("OUTPUT_ON_TO_MOB_PULSE_ON_TOUT")	, true, 1,10, 0, 0, _T("After the output was turned on, the UPS will wait this period before sending the ON pulse to the motherboard.\r\nDefault is 20ms"), _T("[ms]") },
-	{0x1A, 2, _T("IGN_OFF_TO_MOB_PULSE_OFF_TOUT")	, true, 1, 1, 0, 0, _T("In automotive mode, after the ignition is considered OFF, this UPS will wait this period before sending the OFF pulse to the motherboard.\r\nDefault is 5s"), _T("[s]") },
-	{0x1C, 2, _T("IOUT_OFFSET")						, true, 1, 1, 0, 0, _T("This value will be summed with the measured input current, this is a calibration parameter.\r\nDefault is 0mA"), _T("[mA]") },
-	{0x1E, 2, _T("MOB_PULSEWIDTH")					, true, 1,10, 0, 0, _T("The length of the start-up/shutdown pulse sent to the motherboard.\r\nDefault is 500ms."), _T("[ms]") },
+	{0x10, 2, "IGN_HIGH_THRESHOLD"				, true, 1, 1, 0, 0, "If ignition voltage is beyond this threshold, ignition is considered to be ON.\r\nDefault is 6V.", "[mV]" },
+	{0x12, 2, "IGN_LOW_THRESHOLD"				, true, 1, 1, 0, 0, "If ignition voltage is below this threshold, ignition is considered to be OFF.\r\nDefault is 5V.", "[mV]" },
+	{0x14, 2, "IGN_ON_TO_OUTPUT_ON_TOUT"		, true, 1,10, 0, 0, "After ignition is considered ON, the PSU will wait this time before the output is turned ON.\r\nDefault is 2000ms.", "[ms]" },
+	{0x16, 2, "IGN_CANCEL_TOUT"					, true, 1, 1, 0, 0, "After the motherboard boots up, the ignition voltage sensing will be disabled for this period.\r\nDefault is 60s.", "[s]" },
+	{0x18, 2, "OUTPUT_ON_TO_MOB_PULSE_ON_TOUT"	, true, 1,10, 0, 0, "After the output was turned on, the UPS will wait this period before sending the ON pulse to the motherboard.\r\nDefault is 20ms", "[ms]" },
+	{0x1A, 2, "IGN_OFF_TO_MOB_PULSE_OFF_TOUT"	, true, 1, 1, 0, 0, "In automotive mode, after the ignition is considered OFF, this UPS will wait this period before sending the OFF pulse to the motherboard.\r\nDefault is 5s", "[s]" },
+	{0x1C, 2, "IOUT_OFFSET"						, true, 1, 1, 0, 0, "This value will be summed with the measured input current, this is a calibration parameter.\r\nDefault is 0mA", "[mA]" },
+	{0x1E, 2, "MOB_PULSEWIDTH"					, true, 1,10, 0, 0, "The length of the start-up/shutdown pulse sent to the motherboard.\r\nDefault is 500ms.", "[ms]" },
 	
-	{0x20, 2, _T("HARD_OFF_TOUT")					, true, 1, 1, 0, 0, _T("After the shutdown pulse is sent to the motherboard, the UPS will wait this period before the output is turned OFF. This time-out allows the operating system to perform a clean shutdown.\r\nDefault is 60s."), _T("[s]") },
-	//{0x22, 2, _T("IOUT_LIMIT")						, true, 1, 1, 0, 0, _T("?"), _T("[-]") },
+	{0x20, 2, "HARD_OFF_TOUT"					, true, 1, 1, 0, 0, "After the shutdown pulse is sent to the motherboard, the UPS will wait this period before the output is turned OFF. This time-out allows the operating system to perform a clean shutdown.\r\nDefault is 60s.", "[s]" },
+	//{0x22, 2, "IOUT_LIMIT"						, true, 1, 1, 0, 0, "?", "[-]" },
 #ifdef MBOX_DEBUG
-	{0x24, 2, _T("PWM_SPREAD_MODULATING_PERIOD")	, true, 1, 1,	 1,1000.0	, _T("Modulation period parameter of the Random Spread Frequency Modulation module (used for EMI reduction purposes)\r\n1-1000ms"), _T("[ms]") },//1-1000 Hz 
-	{0x26, 2, _T("PWM_SPREAD_PERCENT")				, true, 1, 1,	 0,	 20.0	, _T("Frequency deviation parameter of the Random Spread Frequency Modulation module (used for EMI reduction purposes)\r\n0-20%"), _T("[%]") },
-	{0x28, 2, _T("PWM_FREQ")						, true,18, 1,200.0,	700.0	, _T("Operating frequency of the Switched Mode Power Supply\r\n200-700kHz"), _T("[kHz]") },//1428-5000 ns
+	{0x24, 2, "PWM_SPREAD_MODULATING_PERIOD"	, true, 1, 1,	 1,1000.0	, "Modulation period parameter of the Random Spread Frequency Modulation module (used for EMI reduction purposes)\r\n1-1000ms", "[ms]" },//1-1000 Hz 
+	{0x26, 2, "PWM_SPREAD_PERCENT"				, true, 1, 1,	 0,	 20.0	, "Frequency deviation parameter of the Random Spread Frequency Modulation module (used for EMI reduction purposes)\r\n0-20%", "[%]" },
+	{0x28, 2, "PWM_FREQ"						, true,18, 1,200.0,	700.0	, "Operating frequency of the Switched Mode Power Supply\r\n200-700kHz", "[kHz]" },//1428-5000 ns
 #endif
-	{0x2A, 2, _T("CONFIG1")							, true,14, 1, 0, 0, _T("Configuration register [b7..b0]. Used for enabling/disabling modules. 0 - disabled, 1 - enabled\r\nb7 - Unused\r\nb6 - Unused\r\nb5 - Unused\r\nb4 - Unused\r\nb3 - If set, the USB sense is enabled, +5V USB is used to detect the Motherboard alive status\r\nb2 - If set, the Power measurement (Vout x Iout) is used to detect the Motherboard alive status\r\nb1 - If set, shutdown pulse is enabled through the PWRSW connector.\r\nb0 - If set, startup pulse is enabled through the PWRSW connector."), _T("[-]") },
-	{0x2C, 2, _T("CONFIG2")							, true,14, 1, 0, 0, _T("Configuration register. Used for enabling/disabling modules. 0 - disabled, 1 - enabled\r\nb7..b0 - Reserved/Unused "), _T("[-]") },
-	//{0x2E, 2, _T("WRITE_COUNT")						, true, 1, 1, 0, 0, _T("?"), _T("[-]") },
+	{0x2A, 2, "CONFIG1"							, true,14, 1, 0, 0, "Configuration register [b7..b0]. Used for enabling/disabling modules. 0 - disabled, 1 - enabled\r\nb7 - Unused\r\nb6 - Unused\r\nb5 - Unused\r\nb4 - Unused\r\nb3 - If set, the USB sense is enabled, +5V USB is used to detect the Motherboard alive status\r\nb2 - If set, the Power measurement (Vout x Iout) is used to detect the Motherboard alive status\r\nb1 - If set, shutdown pulse is enabled through the PWRSW connector.\r\nb0 - If set, startup pulse is enabled through the PWRSW connector.", "[-]" },
+	{0x2C, 2, "CONFIG2"							, true,14, 1, 0, 0, "Configuration register. Used for enabling/disabling modules. 0 - disabled, 1 - enabled\r\nb7..b0 - Reserved/Unused ", "[-]" },
+	//{0x2E, 2, "WRITE_COUNT"						, true, 1, 1, 0, 0, "?", "[-]" },
 
-//moved	{0x30, 2, _T("BAL_ENABLE_TOUT")					, true, 1, 1, 0, 0, _T("?"), _T("[-]") },
-	{0x32, 2, _T("CAPACITY")						, true, 1, 1, 0, 0, _T("Battery Capacity.\r\nDefault is 1000mAh."), _T("[mAh]") },
-	{0x34, 2, _T("UPS_BUTTON_ON_TOUT")				, true, 1,10, 0, 0, _T("Filtering time for button pressing.\r\nDefault is 500ms."), _T("[ms]") },
-	{0x36, 2, _T("UPS_VCELL_MIN_START")				, true, 1, 1, 0, 0, _T("If Vin is not present and all the battery cells are above this threshold, the UPS can start and will run on battery.\r\nDefault is 3V."), _T("[mV]") },
-	{0x38, 2, _T("UPS_VCELL_MIN_STOP")				, true, 1, 1, 3000, 4300, _T("If VIN is not present and one of the battery cells is less than this threshold , the UPS will initiate a shutdown procedure.\r\nDefault is 2.8V."), _T("[mV]") },
-//moved	{0x3A, 2, _T("BAL_DISABLE_TOUT")			, true, 1, 1, 0, 0, _T(""), _T("[ms]") },
-	{0x3C, 2, _T("UPS_VCELL_MIN_HARD_STOP")			, true, 1, 1, 3000, 4300, _T("If VIN is not present and one of the battery cells is less than this threshold, the UPS will instantly shut down to preserve battery.\r\nDefault is 3V."), _T("[mV]") },
-	{0x3E, 2, _T("UPS_OVERLOAD")					, true, 1, 1, 0, 0, _T("Max allowed discharge current. In case the discharge current exceeds this threshold, shutdown will be initiated\r\nDefault is 6000mA"), _T("[mA]") },
+//moved	{0x30, 2, "BAL_ENABLE_TOUT"					, true, 1, 1, 0, 0, "?", "[-]" },
+	{0x32, 2, "CAPACITY"						, true, 1, 1, 0, 0, "Battery Capacity.\r\nDefault is 1000mAh.", "[mAh]" },
+	{0x34, 2, "UPS_BUTTON_ON_TOUT"				, true, 1,10, 0, 0, "Filtering time for button pressing.\r\nDefault is 500ms.", "[ms]" },
+	{0x36, 2, "UPS_VCELL_MIN_START"				, true, 1, 1, 0, 0, "If Vin is not present and all the battery cells are above this threshold, the UPS can start and will run on battery.\r\nDefault is 3V.", "[mV]" },
+	{0x38, 2, "UPS_VCELL_MIN_STOP"				, true, 1, 1, 3000, 4300, "If VIN is not present and one of the battery cells is less than this threshold , the UPS will initiate a shutdown procedure.\r\nDefault is 2.8V.", "[mV]" },
+//moved	{0x3A, 2, "BAL_DISABLE_TOUT"			, true, 1, 1, 0, 0, "", "[ms]" },
+	{0x3C, 2, "UPS_VCELL_MIN_HARD_STOP"			, true, 1, 1, 3000, 4300, "If VIN is not present and one of the battery cells is less than this threshold, the UPS will instantly shut down to preserve battery.\r\nDefault is 3V.", "[mV]" },
+	{0x3E, 2, "UPS_OVERLOAD"					, true, 1, 1, 0, 0, "Max allowed discharge current. In case the discharge current exceeds this threshold, shutdown will be initiated\r\nDefault is 6000mA", "[mA]" },
 
-	{0x40, 2, _T("DCHG_TEMP_COLD")					, true,15, 1, 0, 0, _T("COLD temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\nDefault -20�C(FW ver 1.1)"), _T("[�C]") },
-/**/{0x4E, 2, _T("DCHG_TEMP_HOT")					, true,15, 1, 0, 0, _T("HOT temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\nDefault 60�C(FW ver 1.1)"), _T("[�C]") },
-	{0x42, 2, _T("CHG_COND_TOUT")					, true, 1, 1, 0, 0, _T("Conditioning/Precharge time. Charge current is limited until cell voltage exceeds CHG_VCOND value and it is applied during this time.\r\nDefault is 30 sec."), _T("[s]") },
-	{0x44, 2, _T("CHG_BULK_STOP_VOLTAGE")			, true, 1, 1, 0, 0, _T("Maximum allowed bulk charge voltage/cell during constant current/constant voltage charging.\r\nDefault is 4.1 [V/cell]."), _T("[mV/cell]") },
-	{0x46, 2, _T("CHG_HYSTERESIS")					, true, 1, 1, 0, 0, _T("An overvoltage value ( CHG_BULK_STOP_VOLTAGE + CHG_HYSTERESIS ) that is allowed when charging. If one of the cells exceeds this value, charging is immediately stopped.\r\nDefault is 100mV/cell"), _T("[mV/cell]") },
-	{0x48, 2, _T("CHG_START_VOLTAGE")				, true, 1, 1, 0, 0, _T("If cell voltage is below this value, charging can be started.\r\nDefault is 3.85V/cell."), _T("[mV/cell]") },
-	{0x4A, 2, _T("CHG_GLOBAL_TOUT")					, true, 1, 1, 0, 0, _T("Global charge timeout.\r\nDefault is 240 min."), _T("[min]") },
-	{0x4C, 2, _T("CHG_TOPPING_TOUT")				, true, 1, 1, 0, 0, _T("After an overvoltage condition is detected for a cell (for Lithium based batteries), a resting period is set by this timer before applying a small topping charge - in case other cells are still not charged.\r\nDefault is 60s."), _T("[s]") },
-//moved	{0x4E, 2, _T("DCHG_TEMP_HOT")					, true,15, 1, 0, 0, _T("HOT temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\Default 60�C(FW ver 1.1)"), _T("[�C]") },
+	{0x40, 2, "DCHG_TEMP_COLD"					, true,15, 1, 0, 0, "COLD temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\nDefault -20�C(FW ver 1.1)", "[�C]" },
+/**/{0x4E, 2, "DCHG_TEMP_HOT"					, true,15, 1, 0, 0, "HOT temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\nDefault 60�C(FW ver 1.1)", "[�C]" },
+	{0x42, 2, "CHG_COND_TOUT"					, true, 1, 1, 0, 0, "Conditioning/Precharge time. Charge current is limited until cell voltage exceeds CHG_VCOND value and it is applied during this time.\r\nDefault is 30 sec.", "[s]" },
+	{0x44, 2, "CHG_BULK_STOP_VOLTAGE"			, true, 1, 1, 0, 0, "Maximum allowed bulk charge voltage/cell during constant current/constant voltage charging.\r\nDefault is 4.1 [V/cell].", "[mV/cell]" },
+	{0x46, 2, "CHG_HYSTERESIS"					, true, 1, 1, 0, 0, "An overvoltage value ( CHG_BULK_STOP_VOLTAGE + CHG_HYSTERESIS ) that is allowed when charging. If one of the cells exceeds this value, charging is immediately stopped.\r\nDefault is 100mV/cell", "[mV/cell]" },
+	{0x48, 2, "CHG_START_VOLTAGE"				, true, 1, 1, 0, 0, "If cell voltage is below this value, charging can be started.\r\nDefault is 3.85V/cell.", "[mV/cell]" },
+	{0x4A, 2, "CHG_GLOBAL_TOUT"					, true, 1, 1, 0, 0, "Global charge timeout.\r\nDefault is 240 min.", "[min]" },
+	{0x4C, 2, "CHG_TOPPING_TOUT"				, true, 1, 1, 0, 0, "After an overvoltage condition is detected for a cell (for Lithium based batteries), a resting period is set by this timer before applying a small topping charge - in case other cells are still not charged.\r\nDefault is 60s.", "[s]" },
+//moved	{0x4E, 2, "DCHG_TEMP_HOT"					, true,15, 1, 0, 0, "HOT temperature threshold for discharge.In case exceeded UPS will shutdown when on battery.\r\Default 60�C(FW ver 1.1)", "[�C]" },
 
-	{0x50, 2, _T("CHG_TEMP_COLD")					, true,15, 1, 0, 0, _T("COLD temperature threshold for temperature compensated charge current regulation.\r\nDefault 5�C(FW ver 1.0)"), _T("[�C]") },
-	{0x52, 2, _T("CHG_TEMP_COOL")					, true,15, 1, 0, 0, _T("COOL temperature threshold for temperature compensated charge current regulation.\r\nDefault 10�C(FW ver 1.0)"), _T("[�C]") },
-	{0x54, 2, _T("CHG_TEMP_WARM")					, true,15, 1, 0, 0, _T("WARM temperature threshold for temperature compensated charge current regulation.\r\nDefault 50�C(FW ver 1.0)"), _T("[�C]") },
-	{0x56, 2, _T("CHG_TEMP_HOT")					, true,15, 1, 0, 0, _T("HOT temperature threshold for temperature compensated charge current regulation.\r\nDefault 55�C(FW ver 1.0)"), _T("[�C]") },
-	{0x58, 2, _T("UPS_VCELL_ADC_OFFSET")			, true, 1, 1, 0, 0, _T("This value will be summed with the measured cell voltages, this is a calibration parameter.\r\nDefault is 0mV."), _T("[mV]") },
-	{0x5A, 2, _T("CHG_CELL_VCOND")					, true, 1, 1, 0, 0, _T("Conditioning/Pre-charge voltage. Charge current is limited until cell voltage exceeds this value and for at least CHG_TCOND time.\r\nDefault is 3.3V"), _T("[mV]") },
-	{0x5C, 2, _T("BAL_VCELL_MIN")					, true, 1, 1, 0, 0, _T("Balancing is allowed if cell voltages are above this value.\r\nDefault is 3.4V"), _T("[mV]") },
-	{0x5E, 2, _T("BAL_VCELL_DIFF_START")			, true, 1, 1, 0, 0, _T("If the voltage difference between cells exceeds this value, cell balancing will start.\r\nDefault is 80mV."), _T("[mV]") },
+	{0x50, 2, "CHG_TEMP_COLD"					, true,15, 1, 0, 0, "COLD temperature threshold for temperature compensated charge current regulation.\r\nDefault 5�C(FW ver 1.0)", "[�C]" },
+	{0x52, 2, "CHG_TEMP_COOL"					, true,15, 1, 0, 0, "COOL temperature threshold for temperature compensated charge current regulation.\r\nDefault 10�C(FW ver 1.0)", "[�C]" },
+	{0x54, 2, "CHG_TEMP_WARM"					, true,15, 1, 0, 0, "WARM temperature threshold for temperature compensated charge current regulation.\r\nDefault 50�C(FW ver 1.0)", "[�C]" },
+	{0x56, 2, "CHG_TEMP_HOT"					, true,15, 1, 0, 0, "HOT temperature threshold for temperature compensated charge current regulation.\r\nDefault 55�C(FW ver 1.0)", "[�C]" },
+	{0x58, 2, "UPS_VCELL_ADC_OFFSET"			, true, 1, 1, 0, 0, "This value will be summed with the measured cell voltages, this is a calibration parameter.\r\nDefault is 0mV.", "[mV]" },
+	{0x5A, 2, "CHG_CELL_VCOND"					, true, 1, 1, 0, 0, "Conditioning/Pre-charge voltage. Charge current is limited until cell voltage exceeds this value and for at least CHG_TCOND time.\r\nDefault is 3.3V", "[mV]" },
+	{0x5C, 2, "BAL_VCELL_MIN"					, true, 1, 1, 0, 0, "Balancing is allowed if cell voltages are above this value.\r\nDefault is 3.4V", "[mV]" },
+	{0x5E, 2, "BAL_VCELL_DIFF_START"			, true, 1, 1, 0, 0, "If the voltage difference between cells exceeds this value, cell balancing will start.\r\nDefault is 80mV.", "[mV]" },
 
-	{0x60, 2, _T("BAL_VCELL_DIFF_STOP")				, true, 1, 1, 0, 0, _T("If the voltage difference between cells is less than this value, cell balancing will stop.\r\nDefault is 40mV."), _T("[mV]") },
-/**/{0x30, 2, _T("BAL_ENABLE_TOUT")					, true, 1, 5, 0, 0,_T("Balancing enable timeout (FW ver 1.3)"), _T("[min]") },
-/**/{0x3A, 2, _T("BAL_DISABLE_TOUT")				, true, 1, 5, 0, 0,_T("Balancing disable timeout (FW ver 1.3)"), _T("[min]") },
-	{0x62, 2, _T("OCV_SOC0")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 0% fuel gauge estimation.\r\nDefault is 3.3V."), _T("[mV]") },
-	{0x64, 2, _T("OCV_SOC10")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 10% fuel gauge estimation.\r\nDefault is 3.68V."), _T("[mV]") },
-	{0x66, 2, _T("OCV_SOC25")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 25% fuel gauge estimation.\r\nDefault is 3.76V."), _T("[mV]") },
-	{0x68, 2, _T("OCV_SOC50")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 50% fuel gauge estimation.\r\nDefault is 3.82V."), _T("[mV]") },
-	{0x6A, 2, _T("OCV_SOC75")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 75% fuel gauge estimation.\r\nDefault is 3.97V."), _T("[mV]") },
-	{0x6C, 2, _T("OCV_SOC100")						, true, 1, 1, 0, 0, _T("Open Circuit Voltage State Of Charge detection for initial 100% fuel gauge estimation.\r\nDefault is 4.17V."), _T("[mV]") },
+	{0x60, 2, "BAL_VCELL_DIFF_STOP"				, true, 1, 1, 0, 0, "If the voltage difference between cells is less than this value, cell balancing will stop.\r\nDefault is 40mV.", "[mV]" },
+/**/{0x30, 2, "BAL_ENABLE_TOUT"					, true, 1, 5, 0, 0,"Balancing enable timeout (FW ver 1.3)", "[min]" },
+/**/{0x3A, 2, "BAL_DISABLE_TOUT"				, true, 1, 5, 0, 0,"Balancing disable timeout (FW ver 1.3)", "[min]" },
+	{0x62, 2, "OCV_SOC0"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 0% fuel gauge estimation.\r\nDefault is 3.3V.", "[mV]" },
+	{0x64, 2, "OCV_SOC10"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 10% fuel gauge estimation.\r\nDefault is 3.68V.", "[mV]" },
+	{0x66, 2, "OCV_SOC25"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 25% fuel gauge estimation.\r\nDefault is 3.76V.", "[mV]" },
+	{0x68, 2, "OCV_SOC50"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 50% fuel gauge estimation.\r\nDefault is 3.82V.", "[mV]" },
+	{0x6A, 2, "OCV_SOC75"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 75% fuel gauge estimation.\r\nDefault is 3.97V.", "[mV]" },
+	{0x6C, 2, "OCV_SOC100"						, true, 1, 1, 0, 0, "Open Circuit Voltage State Of Charge detection for initial 100% fuel gauge estimation.\r\nDefault is 4.17V.", "[mV]" },
 
-	{0x78, 4, _T("POUT_HIGH_THRESHOLD")				, true, 1, 1, 0, 0, _T("If output power measured is higher than this threshold the connected motherboard is considered to be ON. Together with POUT_LOW_THRESHOLD parameter sets a hysteresis for motherboard status.\r\nDefault is 3W."), _T("[mW]") },
-	{0x7C, 4, _T("POUT_LOW_THRESHOLD")				, true, 1, 1, 0, 0, _T("If output power measured is lower than this threshold the connected motherboard is considered to be OFF. Together with POUT_HIGH_THRESHOLD parameter sets a hysteresis for motherboard status.\r\nDefault is 1W."), _T("[mW]") },
+	{0x78, 4, "POUT_HIGH_THRESHOLD"				, true, 1, 1, 0, 0, "If output power measured is higher than this threshold the connected motherboard is considered to be ON. Together with POUT_LOW_THRESHOLD parameter sets a hysteresis for motherboard status.\r\nDefault is 3W.", "[mW]" },
+	{0x7C, 4, "POUT_LOW_THRESHOLD"				, true, 1, 1, 0, 0, "If output power measured is lower than this threshold the connected motherboard is considered to be OFF. Together with POUT_HIGH_THRESHOLD parameter sets a hysteresis for motherboard status.\r\nDefault is 1W.", "[mW]" },
 
-	{0xFE, 2, _T("WRITE_COUNT (READ ONLY)")			, false, 1, 1, 0, 0, _T("Write count"),  _T("[-]") },
+	{0xFE, 2, "WRITE_COUNT (READ ONLY)"			, false, 1, 1, 0, 0, "Write count",  "[-]" },
 
 #ifdef MBOX_DEBUG
-	{0x6E, 2, _T("PROTECT1")						, true,14, 1, 0, 0, _T("?"),_T("[-]") },
-	 {0x6E, 2, _T("SCD_TRESHOLD")					, true,101, 1, 0, 0, __T("?"), T("[mA]")  },
-	 {0x6E, 2, _T("SCD_DELAY")						, true,102, 1, 0, 0,  _T("?"), _T("[usec]")},
-	{0x70, 2, _T("PROTECT2")						, true,14, 1, 0, 0, _T("?"),_T("[-]") },
-	 {0x70, 2, _T("OCD_TRESHOLD")					, true,103, 1, 0, 0, _T("?"),_T("[mA]") },
-	 {0x70, 2, _T("OCD_DELAY")						, true,104, 1, 0, 0, _T("?"),_T("[msec]") },
-	{0x72, 2, _T("PROTECT3")						, true,14, 1, 0, 0, _T("?"),_T("[-]") },
-	 {0x72, 2, _T("UV_DELAY")						, true,105, 1, 0, 0, _T("?"),_T("[sec]") },
-	 {0x72, 2, _T("OV_DELAY")						, true,106, 1, 0, 0, _T("?"),_T("[sec]") },
-	{0x74, 2, _T("OV_TRIP")							, true, 1, 1, 0, 0, _T("?"), _T("[mV]") },
-	{0x76, 2, _T("UV_TRIP")							, true, 1, 1, 0, 0, _T("?"), _T("[mV]") },
+	{0x6E, 2, "PROTECT1"						, true,14, 1, 0, 0, "?","[-]" },
+	 {0x6E, 2, "SCD_TRESHOLD"					, true,101, 1, 0, 0, "?", "[mA]"  },
+	 {0x6E, 2, "SCD_DELAY"						, true,102, 1, 0, 0,  "?", "[usec]"},
+	{0x70, 2, "PROTECT2"						, true,14, 1, 0, 0, "?","[-]" },
+	 {0x70, 2, "OCD_TRESHOLD"					, true,103, 1, 0, 0, "?","[mA]" },
+	 {0x70, 2, "OCD_DELAY"						, true,104, 1, 0, 0, "?","[msec]" },
+	{0x72, 2, "PROTECT3"						, true,14, 1, 0, 0, "?","[-]" },
+	 {0x72, 2, "UV_DELAY"						, true,105, 1, 0, 0, "?","[sec]" },
+	 {0x72, 2, "OV_DELAY"						, true,106, 1, 0, 0, "?","[sec]" },
+	{0x74, 2, "OV_TRIP"							, true, 1, 1, 0, 0, "?", "[mV]" },
+	{0x76, 2, "UV_TRIP"							, true, 1, 1, 0, 0, "?", "[mV]" },
 #endif
 };
 
@@ -599,26 +599,26 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 	{
 	case 3:
 		{//hh:mm:ss
-			if (_strcmpi(str, "Never")==0)
+			if (strcmp(str, "Never")==0)
 			{
 				val = 0xFFFF;
 				ok = true;
 			}
 			else if ((strlen(str)==8)&&(str[2]==':')&&(str[5]==':'))
 			{
-				_TCHAR* end = NULL;
+				char* end = NULL;
 				char temps[10];
 				
 				str_left(temps, str, 2);
-				int hh  = _tcstol(temps, &end, 10);
+				int hh  = strtol(temps, &end, 10);
 				if ((end != temps)&&(hh>=0)&&(hh<18))
 				{
 					str_mid(temps, str, 3, 2);
-					int mm  = _tcstol(temps, &end, 10);
+					int mm  = strtol(temps, &end, 10);
 					if ((end != temps)&&(mm>=0)&&(mm<60))
 					{
 						str_right(temps, str, 2);
-						int ss  = _tcstol(temps, &end, 10);
+						int ss  = strtol(temps, &end, 10);
 
 						if ((end != temps)&&(ss>=0)&&(ss<60))
 						{
@@ -640,8 +640,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 					negative = true;
 				}
 
-				_TCHAR* end = NULL;
-				val = _tcstod(str, &end);
+				char* end = NULL;
+				val = strtod(str, &end);
 
 				if (end != str)
 				{
@@ -671,8 +671,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 7:
 		{
-			/*_TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			/*char* end = NULL;
+			val = strtod(str, &end);
 
 			c2 = 0;
 			c1 = HIDNUCUps::GetDataVOut(val);
@@ -680,15 +680,15 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 8:
 		{
-			if (_strcmpi(str, "Never")==0)
+			if (strcmp(str, "Never")==0)
 			{
 				val = (double)0xFFFF * dMultiplier;
 				ok = true;
 			}
 			else
 			{
-				TCHAR* end = NULL;
-				val = _tcstod(str, &end);
+				char* end = NULL;
+				val = strtod(str, &end);
 				if (end != str)
 				{
 					if ( (dMin != dMax) && ((val < dMin) || (val > dMax)) ) return false;
@@ -755,8 +755,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 16:
 		{
-			TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			char* end = NULL;
+			val = strtod(str, &end);
 
 			if ((val != 0)&& (end != str))
 			{
@@ -774,8 +774,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 17:
 		{
-			_TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			char* end = NULL;
+			val = strtod(str, &end);
 			if (end != str)
 			{
 				if ( (dMin != dMax) && ((val < dMin) || (val > dMax)) ) return false;
@@ -785,8 +785,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 18:
 		{
-			_TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			char* end = NULL;
+			val = strtod(str, &end);
 			if (end != str)
 			{
 				if ( (dMin != dMax) && ((val < dMin) || (val > dMax)) ) return false;
@@ -798,8 +798,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 19:
 		{//iout >>> n
-			_TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			char* end = NULL;
+			val = strtod(str, &end);
 			if (end != str)
 			{
 				if ( (dMin != dMax) && ((val < dMin) || (val > dMax)) ) return false;
@@ -811,8 +811,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 		}break;
 	case 40:
 		{
-			_TCHAR* end = NULL;
-			val  = _tcstol(str, &end, 16);
+			char* end = NULL;
+			val  = strtol(str, &end, 16);
 			if ( (dMin != dMax) && ((val < dMin) || (val > dMax)) ) return false;
 			ok = true;
 		}break;//hex
@@ -944,8 +944,8 @@ bool HIDNUCUPS::readOneValue(int mesg_no, char* str, int nReadMode, double dMult
 	case 5:
 	default:
 		{//normal read - float
-			_TCHAR* end = NULL;
-			val = _tcstod(str, &end);
+			char* end = NULL;
+			val = strtod(str, &end);
 
 			if (end != str)
 			{

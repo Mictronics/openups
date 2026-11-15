@@ -1,7 +1,7 @@
 #ifndef _HIDOPENUPS_H_
 #define _HIDOPENUPS_H_
 
-#include "HIDInterface.h"
+#include "HIDOpenUPSBase.h"
 #include "usbhid.h"
 
 #include "HArray.h"
@@ -22,11 +22,6 @@
 #define OPENUPS_RECV_ALL_VALUES_2		0x86
 #define OPENUPS_CMD_OUT					0xB1
 #define OPENUPS_CMD_IN					0xB2
-#define OPENUPS_MEM_READ_OUT				0xA1
-#define OPENUPS_MEM_READ_IN				0xA2
-#define OPENUPS_MEM_WRITE_OUT			0xA3
-#define OPENUPS_MEM_WRITE_IN				0xA4
-#define OPENUPS_MEM_ERASE				0xA5
 
 #define OPENUPS_ENTER_CALIBRATION_OUT	0xA9
 #define OPENUPS_ENTER_CALIBRATION_IN		0xAA
@@ -129,8 +124,6 @@
 
 #define TERMISTOR_CONSTS 34
 
-#define OPENUPS_SETTINGS_ADDR_START             0x007800
-#define OPENUPS_SETTINGS_ADDR_END               0x007C00
 #define OPENUPS_SETTINGS_ADDR_CALIBR_START  	0x0078D0
 #define OPENUPS_SETTINGS_ADDR_CALIBR_END    	0x007900
 #define OPENUPS_SETTINGS_PACKS 					64
@@ -139,16 +132,13 @@
 #define OPENUPS_SCRIPT_END_ADDR 				0x3BF0
 
 
-class HIDOpenUPS : public HIDInterface
+class HIDOpenUPS : public HIDOpenUPSBase
 {
 public:
 	HIDOpenUPS(USBHID *d);
 	virtual ~HIDOpenUPS();
 
 	void GetStatus();
-	void ReadConfigurationMemory();
-	void EraseConfigurationMemory();
-	void WriteConfigurationMemory();
 	void parseMessage(unsigned char *msg);
 	void printValues();
 	float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier);

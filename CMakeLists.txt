@@ -4,6 +4,7 @@ project(openups CXX C)
 set(SOURCES 
 src/main.cpp
 src/lib/usbhid.cpp
+src/lib/HIDOpenUPSBase.cpp
 src/lib/HIDOpenUPS.cpp
 src/lib/HIDOpenUPS2.cpp
 src/lib/HIDNUCUPS.cpp

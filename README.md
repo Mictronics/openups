@@ -83,6 +83,10 @@ The commands below then work without `sudo`.
 
         $ openups -h
 
+ - Every option also has a long form: `-t/--type`, `-n/--index`, `-i/--import`, `-o/--export`, `-c/--comments`, `-s/--status`, `-e/--exec`, `-r/--restart`, `-b/--bootloader`, `-h/--help`, `-V/--version`. Example:
+
+        $ openups --type openups --status
+
 - Show status and configuration:
 
         $ sudo openups -t <device name>

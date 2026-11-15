@@ -152,6 +152,7 @@ unsigned int g_OpenUPS2_memTerm[] =
 HIDOpenUPS2::HIDOpenUPS2(USBHID *d): HIDOpenUPSBase(d)
 {
 	m_bReportWrittenPages = false;
+	m_bEmptyFieldOk = true;
 }
 
 HIDOpenUPS2::~HIDOpenUPS2()
@@ -577,69 +578,6 @@ bool HIDOpenUPS2::readOneValue(char *str, int nReadMode, double dMultiplier, int
 	//DBGOutput("readOneValue %f [%02x][%02x]\n",(float)val,(unsigned int)c2,(unsigned int)c1);
 
 	return ok;
-}
-
-bool HIDOpenUPS2::setVariableData(int mesg_no, char *str)
-{
-	int len = HIDOpenUPS2::GetMessages()[mesg_no].nLen;
-
-	if (len != 0)
-	{
-		unsigned char c1 = 0;
-		unsigned char c2 = 0;
-		unsigned char c3 = 0;
-		unsigned char c4 = 0;
-
-		if (readOneValue(str, HIDOpenUPS2::GetMessages()[mesg_no].nReadMode, HIDOpenUPS2::GetMessages()[mesg_no].dMultiplier, len, c1, c2, c3, c4))
-		{
-			switch (len)
-			{
-			case 1:
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex] = c2;
-				break;
-			case 2:
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex] = c1;
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex + 1] = c2;
-				break;
-			case 4:
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex] = c1;
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex + 1] = c2;
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex + 2] = c3;
-				m_chPackages[HIDOpenUPS2::GetMessages()[mesg_no].nIndex + 3] = c4;
-				break;
-			}
-			return 1;
-		}
-		else
-			return 0;
-	}
-	return 1;
-}
-
-unsigned char HIDOpenUPS2::getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment)
-{
-	if ((cnt < 0) || (cnt >= MAX_MESSAGE_CNT))
-		return 0;
-
-	if (HIDOpenUPS2::GetMessages()[cnt].nLen == 0)
-		return 0;
-
-	if (name)
-		strcpy(name, HIDOpenUPS2::GetMessages()[cnt].strName);
-	if (unit)
-		strcpy(unit, HIDOpenUPS2::GetMessages()[cnt].strUnit);
-	if (comment)
-		strcpy(comment, HIDOpenUPS2::GetMessages()[cnt].strText);
-
-	if (value)
-	{
-		convertOneValue2String(value, HIDOpenUPS2::GetMessages()[cnt].nLen,
-							   HIDOpenUPS2::GetMessages()[cnt].nIndex,
-							   HIDOpenUPS2::GetMessages()[cnt].nReadMode,
-							   HIDOpenUPS2::GetMessages()[cnt].dMultiplier);
-	}
-
-	return HIDOpenUPS2::GetMessages()[cnt].nReadMode;
 }
 
 void HIDOpenUPS2::restartUPS()

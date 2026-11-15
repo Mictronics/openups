@@ -9,6 +9,7 @@
 HIDOpenUPSBase::HIDOpenUPSBase(USBHID *d): HIDInterface(d)
 {
 	m_bReportWrittenPages = true;
+	m_bEmptyFieldOk = false;
 	m_ulSettingsAddr = OPENUPS_SETTINGS_ADDR_START;
 }
 
@@ -193,4 +194,61 @@ void HIDOpenUPSBase::convertOneValue2String(char *destination, int nLen, int nIn
 	default:
 		sprintf(destination, "%d", (int)value);
 	}
+}
+
+bool HIDOpenUPSBase::setVariableData(int mesg_no, char *str)
+{
+	ATXMSG &msg = GetMessages()[mesg_no];
+	int len = msg.nLen;
+
+	if (len == 0)
+		return m_bEmptyFieldOk;
+
+	unsigned char c1 = 0;
+	unsigned char c2 = 0;
+	unsigned char c3 = 0;
+	unsigned char c4 = 0;
+
+	if (!readOneValue(str, msg.nReadMode, msg.dMultiplier, len, c1, c2, c3, c4))
+		return false;
+
+	switch (len)
+	{
+	case 1:
+		m_chPackages[msg.nIndex] = c2;
+		break;
+	case 2:
+		m_chPackages[msg.nIndex] = c1;
+		m_chPackages[msg.nIndex + 1] = c2;
+		break;
+	case 4:
+		m_chPackages[msg.nIndex] = c1;
+		m_chPackages[msg.nIndex + 1] = c2;
+		m_chPackages[msg.nIndex + 2] = c3;
+		m_chPackages[msg.nIndex + 3] = c4;
+		break;
+	}
+	return true;
+}
+
+unsigned char HIDOpenUPSBase::getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment)
+{
+	if (cnt >= MAX_MESSAGE_CNT)
+		return 0;
+
+	ATXMSG &msg = GetMessages()[cnt];
+	if (msg.nLen == 0)
+		return 0;
+
+	if (name)
+		strcpy(name, msg.strName);
+	if (unit)
+		strcpy(unit, msg.strUnit);
+	if (comment)
+		strcpy(comment, msg.strText);
+
+	if (value)
+		convertOneValue2String(value, msg.nLen, msg.nIndex, msg.nReadMode, msg.dMultiplier);
+
+	return msg.nReadMode;
 }

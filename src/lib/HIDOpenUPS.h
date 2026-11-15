@@ -141,12 +141,10 @@ public:
 	void parseMessage(unsigned char *msg);
 	void printValues();
 	bool readOneValue(char *str, int nReadMode, double dMultiplier, int len, unsigned char &c1, unsigned char &c2, unsigned char &c3, unsigned char &c4);
-	bool setVariableData(int mesg_no, char *str);
 	UVP* GetUVPs();
 	ATXMSG* GetMessages();
 	double GetConstant(int i);
 	unsigned int* GetTermistorConsts();
-	unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment);
 	void restartUPS();
 	void restartUPSInBootloaderMode();
 

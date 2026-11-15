@@ -26,6 +26,8 @@ public:
 	void WriteConfigurationMemory();
 	float convertOneValue2Float(unsigned char *buffer, int nLen, int nIndex, int nReadMode, double dMultiplier);
 	void convertOneValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier);
+	bool setVariableData(int mesg_no, char *str);
+	unsigned char getUPSVariableData(unsigned int cnt, char *name, char *value, char *unit, char *comment);
 
 protected:
 	// Per-device read modes, tried before the shared ones. Return true if handled.
@@ -34,6 +36,7 @@ protected:
 	virtual bool deviceValue2String(char *destination, int nLen, int nIndex, int nReadMode, double dMultiplier, double value) { return false; }
 
 	bool m_bReportWrittenPages; // OpenUPS2 stays quiet while writing
+	bool m_bEmptyFieldOk;       // setVariableData result for a zero-length field: OpenUPS false, OpenUPS2 true
 
 private:
 	int thermistor2Temp(unsigned int termistor);

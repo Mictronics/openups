@@ -113,7 +113,7 @@ int HIDInterface::GetMessageIdxByName(const char* name)
 	if (!name)
 		return -1;
 
-	for (int i = 0;i < MAX_MESSAGE_CNT; i++)
+	for (unsigned int i = 0; i < m_nMaxMessages; i++)
 	{
 		ATXMSG msg = GetMessages()[i];
 		//fprintf(stderr, "GetMessage %d: %s nLen: %d cmp: %d\n", i, msg.strName, msg.nLen, strcasecmp(msg.strName, name));

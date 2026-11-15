@@ -12,7 +12,7 @@
 #include <ctype.h>
 
 #include "HIDInterface.h"
-#include "HArray.h"
+#include <vector>
 
 #define OPENUPS2_CMD_OUT					0xB1
 
@@ -50,54 +50,31 @@ void HIDInterface::printConfiguration(bool withComments)
 
 int HIDInterface::sendMessageWithBuffer(unsigned char cType, unsigned int buflen, unsigned char* buffer, unsigned int len, ...)
 {
-	HArray mesg(buflen + len + 1);
-	mesg.getBuf()[0] = cType;
+	std::vector<unsigned char> mesg(buflen + len + 1);
+	mesg[0] = cType;
 
 	va_list args;
 	va_start(args, len);
-	unsigned int cnt = 0;
-	unsigned char i = va_arg(args, unsigned int);
-
-	while (cnt < len)
-	{
-		mesg.getBuf()[1+cnt] = i;
-		cnt++;
-		if (cnt < len)
-			i = va_arg(args, unsigned int);
-	}
-	
+	for (unsigned int cnt = 0; cnt < len; cnt++)
+		mesg[1 + cnt] = va_arg(args, unsigned int);
 	va_end(args);
-	
-	memcpy(mesg.getBuf() + 1 + len, buffer, buflen);
 
-	int ret = d->writeInterrupt(mesg.getBuf(), mesg.length(), true);
-	//fprintf(stderr, "[0x%02x] written %d/%d\n", cType, ret, len + 1);
-	return ret;
+	memcpy(&mesg[1 + len], buffer, buflen);
+	return d->writeInterrupt(mesg.data(), mesg.size(), true);
 }
 
-int HIDInterface::sendMessage(unsigned char cType, unsigned int len, ...) 
+int HIDInterface::sendMessage(unsigned char cType, unsigned int len, ...)
 {
-	HArray mesg(len + 1);
-	//HArray mesg(24);
-	mesg.getBuf()[0] = cType;
+	std::vector<unsigned char> mesg(len + 1);
+	mesg[0] = cType;
 
 	va_list args;
 	va_start(args, len);
-	unsigned int cnt = 0;
-
-	unsigned char i = va_arg(args, unsigned int);
-	while (cnt < len)
-	{
-		mesg.getBuf()[1 + cnt] = i;
-		cnt++;
-		if (cnt < len)
-			i = va_arg(args, unsigned int);
-	}
+	for (unsigned int cnt = 0; cnt < len; cnt++)
+		mesg[1 + cnt] = va_arg(args, unsigned int);
 	va_end(args);
 
-	int ret = d->writeInterrupt(mesg.getBuf(), mesg.length(), true);
-	//fprintf(stderr, "[0x%02x] written %d/%d\n", cType, ret, len + 1);
-	return ret;
+	return d->writeInterrupt(mesg.data(), mesg.size(), true);
 }
 
 int HIDInterface::sendCommand(unsigned char command, unsigned char value)

@@ -4,7 +4,6 @@
 #include "HIDOpenUPSBase.h"
 #include "usbhid.h"
 
-#include "HArray.h"
 
 #define ETA_CHG (double)0.90
 

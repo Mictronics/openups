@@ -11,7 +11,6 @@ src/lib/HIDNUCUPS.cpp
 src/lib/HIDDCDCUSB.cpp
 src/lib/HIDInterface.cpp
 src/utils/util.cpp
-src/utils/HArray.cpp 
 )
 
 option(_DEBUG "Debug messages" ON)

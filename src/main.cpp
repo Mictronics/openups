@@ -10,7 +10,6 @@
 #include "version.h"
 #include "util.h"
 #include "usbhid.h"
-#include "HArray.h"
 #include "HIDDCDCUSB.h"
 #include "HIDOpenUPS.h"
 #include "HIDOpenUPS2.h"

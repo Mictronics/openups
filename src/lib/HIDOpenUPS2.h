@@ -4,7 +4,6 @@
 #include "HIDOpenUPSBase.h"
 #include "usbhid.h"
 
-#include "HArray.h"
 
 #define OPENUPS2_MSG_READ  32
 #define OPENUPS2_MSG_WRITE 32
